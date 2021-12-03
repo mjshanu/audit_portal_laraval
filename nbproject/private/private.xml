@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/xampp/htdocs/audit_portal/config/app.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/CandidateController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/BranchController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/routes/api.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_19_092642_create_organization_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/.env</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_121908_create_job_post_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Middleware/VerifyCsrfToken.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/routes/web.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController_1.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/OrganizationController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Providers/AppServiceProvider.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Candidate.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Organization.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Job_Post.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/User.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Branches.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_071521_create_branches_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/config/cors.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/Controller.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/public/.htaccess</file>
+        </group>
+    </open-files>
+</project-private>

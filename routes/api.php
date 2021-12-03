@@ -23,6 +23,9 @@ Route::delete('/delete_organization/{id}',[OrganizationController::class,'destro
 Route::post('/add_branches',[BranchController::class,'store']);
 Route::get('/getposttype',[JobpostController::class,'index']);
 Route::post('/add_jobs',[JobController::class,'store']);
+Route::get('/getJobs',[JobController::class,'index']);
+Route::get('/editfecthjobdata/{id}',[JobController::class,'edit']);
+Route::put('/update_job',[JobController::class,'update']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

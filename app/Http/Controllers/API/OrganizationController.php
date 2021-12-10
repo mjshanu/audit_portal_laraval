@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Organization;
+use DB;
+
 class OrganizationController extends Controller
 {
     public function store(Request $request)
@@ -29,6 +31,31 @@ class OrganizationController extends Controller
         return response()->json([
                     'sta' => 200,
                     'org' => $organaization,
+        ]);
+        
+    }
+    public function getorgbranchvalues() {
+      
+     $organization= Organization::get(['id','org_name', 'org_code', 'org_type','org_location']);  
+     $i=0;
+    foreach($organization as $org)
+    {
+        $id=$org['id'];
+        
+   
+      $branches = DB::table('branches')
+                ->select('id as bid','branch_name','branch_code','branch_type','branch_location')
+              
+                ->where('branch_company', '=', $id)
+                  ->get();
+      $organization[$i]['branch']=$branches;
+               $i++;
+    }
+   
+     
+       return response()->json([
+                    'sta' => 200,
+                    'org' => $organization,
         ]);
         
     }
@@ -67,6 +94,7 @@ public function destroy($id) {
 public function organaisationname()
 {
     $distorg=Organization::distinct()->get(['org_name','id']);
+    
     return response()->json([
                     'status' => 200,
                     'org' => $distorg,

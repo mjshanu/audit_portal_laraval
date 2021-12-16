@@ -71,6 +71,18 @@ class EmployeeController extends Controller {
                     'candidate' => $ulist,
         ]);
     }
+    public function releaseresponse() {
+        $users = DB::table('basic_information')
+                ->select()
+                ->where('status', 'Release')
+                  ->orderBy('position', 'ASC')
+                ->get();
+        $ulist = json_encode($users);
+        return response()->json([
+                    'status' => 200,
+                    'candidate' => $ulist,
+        ]);
+    }
 
     public function store(Request $request) {
         //return $request->all();
@@ -166,5 +178,9 @@ class EmployeeController extends Controller {
     public function updatecolumnself(Request $request) {
         return $request->all();
     }
-
+  public function editschedule($id)
+  {
+      $schedule = DB::table('schedule_details')->where('b_id', '=', $id)->get();
+      echo '<pre>';print_r($schedule);
+  }
 }

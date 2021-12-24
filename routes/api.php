@@ -16,6 +16,8 @@ Route::get('/getOrgnaization_type',[EmployeeController::class,'org_type']);
 Route::post('/add_employee_first',[EmployeeController::class,'store']);
 Route::post('/updatecolumn',[EmployeeController::class,'updatecolumn']);
 Route::post('/add_schedule',[CandidateController::class,'add_schedule']);
+Route::post('/add_rejection',[CandidateController::class,'rejection']);
+Route::post('/add_offerletter',[CandidateController::class,'generate_offer_letter']);
 Route::post('/add_organization',[OrganizationController::class,'store']);
 Route::get('/getOrganization',[OrganizationController::class,'index']);
 Route::get('/editfecthscheduledata/{id}',[EmployeeController::class,'editschedule']);

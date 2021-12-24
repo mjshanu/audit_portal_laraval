@@ -112,7 +112,7 @@ class EmployeeController extends Controller {
         );
         //  return $insert;
 //    }
-        DB::table('schedule_details')->insert(
+      /*  DB::table('schedule_details')->insert(
                 array(
                     'b_id' => $insert,
                     'panelmembers' => $request->p_members,
@@ -131,7 +131,7 @@ class EmployeeController extends Controller {
                     'c_status' => $request->c_status,
                     'reasons' => $request->reason,
                 )
-        );
+        );*/
 
         return response()->json([
                     'status' => 200,
@@ -140,12 +140,16 @@ class EmployeeController extends Controller {
     }
 
     public function updatecolumn(Request $request) {
-        // return $request->all();
+        
         $items = $request->itemsnew;
         $type = $request->type;
         $column = $request->column['name'];
+         $reid=  $request->id;
+      
         if ($type == "another") {
-            $i = 1;
+           
+                $i = 1;
+                
             foreach ($items as $columnitems) {
 
                 $id = $columnitems['id'];

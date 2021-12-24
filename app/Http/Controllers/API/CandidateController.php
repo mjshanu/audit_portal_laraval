@@ -30,4 +30,32 @@ class CandidateController extends Controller
                     'message' => "added successfully"
         ]);
     }
+    public function rejection(Request $request)
+    {
+     
+         DB::table('rejection_reason')->insert(
+                array(
+                    'b_id' => $request->r_id,
+                    'c_status' => $request->rejectionstatus,
+                    'reasons' => $request->reason,
+                    'remarks' => $request->remark,
+                )
+        );
+$update = \DB::table('basic_information')->where('id', $request->r_id)->limit(1)->update(['status' => 'Rejection', 'position' => 1]);
+        return response()->json([
+                    'status' => 200,
+                    'message' => "added successfully"
+        ]);
+    }
+    public function generate_offer_letter(Request $request)
+    {
+        return $request->all();
+    $releaseid=$request->release_id;
+//    echo $releaseid;
+//    //$ecode=200+$releaseid;
+//   // $codename="ENS/CHR/OL/112021/01122021/".$ecode;
+//   $datecode = DB::table('users')
+//            ->select('name', 'email as user_email')
+//            ->get();
+    }
 }

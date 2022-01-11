@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2021 at 06:39 AM
+-- Generation Time: Jan 11, 2022 at 10:41 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -76,13 +76,6 @@ CREATE TABLE `basic_information` (
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `basic_information`
---
-
-INSERT INTO `basic_information` (`id`, `applied_date`, `post`, `skillset`, `email`, `contact_number`, `education`, `total_exp`, `ctc`, `exp_ctc`, `notice_prd`, `dob`, `location`, `name`, `c_company`, `domain_exp`, `primary_skill`, `sec_skill`, `ref`, `status`, `job_id`, `title`, `position`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'PHP developer', 'skill1,skill2', 'mjshanukk@gmail.com', '01254', 'btech', 10, 7, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Schedule', 1, 'JAVA DEVELOPER', 1, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -113,6 +106,28 @@ INSERT INTO `branches` (`id`, `branch_name`, `branch_type`, `branch_code`, `bran
 (3, 'B1', 'Development', 'B101', 'Kochi', 'encaps@bourntec.com', 1, '2021-12-10 00:00:00', 1524, '2021-12-10 05:22:08', '2021-12-10 05:22:08'),
 (4, 'B1', 'Development', 'B101', 'Kochi', 'encaps@bourntec.com', 1, '2021-12-10 00:00:00', 1524, '2021-12-10 05:22:09', '2021-12-10 05:22:09'),
 (5, 'B2m', 'Development', 'S012', 'Kochi', 'encaps@bourntec.com', 1, '2021-12-17 00:00:00', 1524, '2021-12-10 05:25:05', '2021-12-10 05:25:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `candidate_log`
+--
+
+CREATE TABLE `candidate_log` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fk_can_id` int(11) NOT NULL,
+  `status_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `candidate_log`
+--
+
+INSERT INTO `candidate_log` (`id`, `fk_can_id`, `status_name`, `created_at`, `updated_at`) VALUES
+(1, 2, 'Inprogress', NULL, NULL),
+(2, 1, 'Schedule an Interview', '2022-01-04 08:55:06', '2022-01-04 08:55:06');
 
 -- --------------------------------------------------------
 
@@ -205,7 +220,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2021_11_19_092642_create_organization_table', 1),
 (12, '2021_11_30_071521_create_branches_table', 1),
 (13, '2021_11_30_121908_create_job_post_table', 1),
-(14, '2021_12_02_071548_create_job_table', 1);
+(14, '2021_12_02_071548_create_job_table', 1),
+(15, '2022_01_04_064430_create_status_information', 2),
+(16, '2022_01_04_071552_create_candidate_log', 3);
 
 -- --------------------------------------------------------
 
@@ -216,10 +233,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `offer_letter` (
   `offer_id` int(11) NOT NULL,
   `fk_can_id` int(11) NOT NULL,
-  `offer_code` varchar(20) NOT NULL,
+  `offer_code` varchar(500) NOT NULL,
   `created_by` varchar(20) NOT NULL DEFAULT 'admin',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `offer_release_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `offer_letter`
+--
+
+INSERT INTO `offer_letter` (`offer_id`, `fk_can_id`, `offer_code`, `created_by`, `created_at`, `offer_release_date`) VALUES
+(2, 2, 'ENS/kakkanad/OL/20211228/20211229/202', 'admin', '2021-12-28 17:04:01', '2021-12-29');
 
 -- --------------------------------------------------------
 
@@ -286,17 +311,23 @@ CREATE TABLE `schedule_details` (
   `interview_time` varchar(20) DEFAULT NULL,
   `job_title` varchar(60) DEFAULT NULL,
   `department` varchar(50) DEFAULT NULL,
-  `rating` varchar(5) NOT NULL,
+  `rating` varchar(5) DEFAULT NULL,
   `commemts` varchar(20) NOT NULL,
   `i_place` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `schedule_details`
+-- Table structure for table `status_information`
 --
 
-INSERT INTO `schedule_details` (`s_id`, `b_id`, `panelmembers`, `interview_time`, `job_title`, `department`, `rating`, `commemts`, `i_place`) VALUES
-(1, 1, 'ABC,EDEF', '2021-12-16', 'mnsmd', 'sds', '5', 'cfgfg', 'kochi');
+CREATE TABLE `status_information` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `status_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -360,6 +391,12 @@ ALTER TABLE `branches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `candidate_log`
+--
+ALTER TABLE `candidate_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -414,6 +451,12 @@ ALTER TABLE `schedule_details`
   ADD PRIMARY KEY (`s_id`);
 
 --
+-- Indexes for table `status_information`
+--
+ALTER TABLE `status_information`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `test`
 --
 ALTER TABLE `test`
@@ -440,13 +483,19 @@ ALTER TABLE `audit_org_type`
 -- AUTO_INCREMENT for table `basic_information`
 --
 ALTER TABLE `basic_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `candidate_log`
+--
+ALTER TABLE `candidate_log`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -470,13 +519,13 @@ ALTER TABLE `job_post`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `offer_letter`
 --
 ALTER TABLE `offer_letter`
-  MODIFY `offer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `offer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `organization`
@@ -494,7 +543,13 @@ ALTER TABLE `rejection_reason`
 -- AUTO_INCREMENT for table `schedule_details`
 --
 ALTER TABLE `schedule_details`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `status_information`
+--
+ALTER TABLE `status_information`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `test`

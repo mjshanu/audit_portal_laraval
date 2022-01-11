@@ -110,6 +110,14 @@ class EmployeeController extends Controller {
                     'status' => 'Inprogress'
                 )
         );
+      $candidate_status=  DB::table('candidate_log')->insert(
+                array(
+                    'fk_can_id' =>$insert,
+                    'status_name' =>'Inprogress',
+                   
+                )
+        );
+        
         //  return $insert;
 //    }
       /*  DB::table('schedule_details')->insert(

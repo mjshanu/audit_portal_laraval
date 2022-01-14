@@ -22,11 +22,10 @@ class CandidateController extends Controller {
                     'commemts' => $request->comments
                 )
         );
-$candidate_status=  DB::table('candidate_log')->insert(
+        $candidate_status = DB::table('candidate_log')->insert(
                 array(
-                    'fk_can_id' =>$request->s_id,
-                    'status_name' =>'Schedule an Interview',
-                   
+                    'fk_can_id' => $request->s_id,
+                    'status_name' => 'Schedule an Interview',
                 )
         );
         $update = \DB::table('basic_information')->where('id', $request->s_id)->limit(1)->update(['status' => 'Schedule', 'position' => 1]);
@@ -34,7 +33,6 @@ $candidate_status=  DB::table('candidate_log')->insert(
                     'status' => 200,
                     'message' => "added successfully"
         ]);
-          
     }
 
     public function rejection(Request $request) {
@@ -47,11 +45,10 @@ $candidate_status=  DB::table('candidate_log')->insert(
                     'remarks' => $request->remark,
                 )
         );
-        $candidate_status=  DB::table('candidate_log')->insert(
+        $candidate_status = DB::table('candidate_log')->insert(
                 array(
-                    'fk_can_id' =>$request->s_id,
-                    'status_name' =>'Rejected',
-                   
+                    'fk_can_id' => $request->r_id,
+                    'status_name' => 'Rejected',
                 )
         );
         $update = \DB::table('basic_information')->where('id', $request->r_id)->limit(1)->update(['status' => 'Rejection', 'position' => 1]);
@@ -62,7 +59,7 @@ $candidate_status=  DB::table('candidate_log')->insert(
     }
 
     public function generate_offer_letter(Request $request) {
-
+       
         $releaseid = $request->release_id;
         $joiningdate = $request->release_date;
 
@@ -87,13 +84,13 @@ $candidate_status=  DB::table('candidate_log')->insert(
                 array(
                     'fk_can_id' => $releaseid,
                     'offer_code' => $offercode,
+                    'offer_release_date'=>$joiningdate
                 )
         );
-         $candidate_status=  DB::table('candidate_log')->insert(
+        $candidate_status = DB::table('candidate_log')->insert(
                 array(
-                    'fk_can_id' =>$request->s_id,
-                    'status_name' =>'Offer letter genereted',
-                   
+                    'fk_can_id' => $releaseid,
+                    'status_name' => 'Offer letter genereted',
                 )
         );
         $update = \DB::table('basic_information')->where('id', $releaseid)->limit(1)->update(['status' => 'Release', 'position' => 1]);
@@ -161,7 +158,7 @@ $candidate_status=  DB::table('candidate_log')->insert(
     }
 
     public function edit_column_name_ref(Request $request) {
-        //return $request->all();
+        return $request->all();
         $username = $request->username;
         $post = $request->post;
         $skillset = $request->skillset;
@@ -181,68 +178,193 @@ $candidate_status=  DB::table('candidate_log')->insert(
         $secskill = $request->secskill;
         $ref = $request->ref;
         $edit_b_id = $request->edit_b_id;
-        $edit_basic_column_name = $request->edit_b_id;
+        $edit_basic_column_name = $request->edit_basic_column_name;
         $edit_panel_member = $request->edit_panel_members;
         $edi_idatetime = $request->edi_idatetime;
         $edit_iplace = $request->edit_iplace;
         $edit_jobtitle = $request->edit_jobtitle;
         $edit_department_team = $request->edit_department_team;
         $edit_interview_rating = $request->edit_interview_rating;
-        $edit_s_id= $request->edit_s_id;
-        $edit_comments= $request->edit_comments;
-        return $edit_basic_column_name;
+        $edit_s_id = $request->edit_s_id;
+        $edit_comments = $request->edit_comments;
         
-        
+      if($edit_basic_column_name=='Inprogress')
+      {
+        DB::table('basic_information')
+                ->where('id', $request->id)
+                ->update([
+                    'name' =>  $username ,
+                    'post' => $post,
+                    'skillset' =>  $skillset,
+                    'email' =>  $email,
+                    'contact_number' => $phonenumber,
+                    'education' => $qualification,
+                    'total_exp' => $exp,
+                    'ctc' =>  $currentctc ,
+                    'exp_ctc' => $expectsala,
+                    'notice_prd' =>  $noticeprd,
+                    'dob' =>  $dob ,
+                    'location' =>$location,
+                    'c_company' => $current_company,
+                    'domain_exp' => $domain_exp,
+                    'primary_skill' =>  $primary_skill,
+                    'sec_skill' => $secskill,
+                    'applied_date' => $appdate ,
+                   
+                    'ref' => $ref,
+        ]);  
+          
+      }
+       if($edit_basic_column_name=='Schedule')
+      {
+        DB::table('schedule_details')
+                ->where('b_id', $request->id)
+                ->update([
+                  'panelmembers' => $edit_panel_member,
+          'interview_time' =>  $edi_idatetime,
+          'job_title' => $edit_jobtitle,
+          'department' => $edit_department_team,
+          'i_place' => $edit_iplace,
+         'rating'=>$edit_interview_rating,
+                     'commemts'=>$edit_comments,
+        ]); 
+          
+      }
+      
+        if($edit_basic_column_name=='Rejection')
+      {
+        DB::table('rejection_reason')
+                ->where('b_id', $request->id)
+                ->update([
+                  'c_status' => $request->edit_rejectionstatus,
+          'reasons' => $request->edit_reason,
+          'remarks' => $request->edit_remark,
+         
+        ]);
+          
+      }
+       if($edit_basic_column_name=='Release')
+      {
+        DB::table('rejection_reason')
+                ->where('b_id', $request->id)
+                ->update([
+                  'c_status' => $request->edit_rejectionstatus,
+          'reasons' => $request->edit_reason,
+          'remarks' => $request->edit_remark,
+         
+        ]);
+          
+      }
     }
-    public function getcandidate($id)
-    {
-        $result=DB::table('basic_information')
-->select('*')
-->rightJoin('schedule_details','basic_information.id','=','schedule_details.b_id')
- ->leftJoin('rejection_reason','basic_information.id','=','rejection_reason.b_id')               
-->where('basic_information.id', $id)
-->get();
-         return response()->json([
+
+    public function getcandidate($id) {
+        $result = DB::table('basic_information')
+                ->select('*')
+                ->leftJoin('schedule_details', 'basic_information.id', '=', 'schedule_details.b_id')
+                ->leftJoin('rejection_reason', 'basic_information.id', '=', 'rejection_reason.b_id')
+                ->where('basic_information.id', $id)
+                ->get();
+        return response()->json([
                     'status' => 200,
                     'candidate' => $result,
         ]);
     }
-	public function update_recruitement(Request $request)
-	{
-		return $request->all();
-		DB::table('basic_information as bi')
-                ->join("schedule_details as sc", "bi.id", "=", "sc.b_id")
-				->join("rejection_reason as rr", "bi.id", "=", "rr.b_id")
-                ->where("bi.id", "=", $request->id)
-               
-                ->update(
-				[ 'name' => $request->username,
-                   'post' => $request->	post,
-				   'skillset' => $request->	skillset,
-                  'email' => $request->	p_email,
-				  'contact_number' => $request->phonenumber,
-				    'education' => $request->qualification,
-					'total_exp' => $request->total_exp,
-					'ctc' => $request->ctc,
-					'exp_ctc' => $request->expect_ctc,
-					'notice_prd' => $request->noticeprd,
-					'dob' => $request->dob,
-					'location' => $request->location,
-					'c_company' => $request->current_company,
-					'domain_exp' => $request->domain_exp,
-					'primary_skill' => $request->primary_skill,
-					'sec_skill' => $request->secskill,
-					'applied_date' => $request->app_date,
-					'sec_skill' => $request->secskill,
-					'ref' => $request->ref,
-					'panelmembers' => $request->p_members,
-					'interview_time' => $request->idatetime,
-					'job_title' => $request->jobtitle,
-					'department' => $request->department_team,
-					'i_place' => $request->iplace,
-					'i_place' => $request->iplace,
-				   ]
-				);
-	}
 
+    public function update_recruitement(Request $request) {
+
+            //return $request->all();
+        /* $sql= DB::table('basic_information as bi')
+          ->join("schedule_details as sc", "bi.id", "=", "sc.b_id")
+          ->join("rejection_reason as rr", "bi.id", "=", "rr.b_id")
+          ->where("bi.id", "=", $request->id)
+          ->toSql()
+          ->update(
+          ['name' => $request->username,
+          'post' => $request->post,
+          'skillset' => $request->skillset,
+          'email' => $request->p_email,
+          'contact_number' => $request->phonenumber,
+          'education' => $request->qualification,
+          'total_exp' => $request->total_exp,
+          'ctc' => $request->ctc,
+          'exp_ctc' => $request->expect_ctc,
+          'notice_prd' => $request->noticeprd,
+          'dob' => $request->dob,
+          'location' => $request->location,
+          'c_company' => $request->current_company,
+          'domain_exp' => $request->domain_exp,
+          'primary_skill' => $request->primary_skill,
+          'sec_skill' => $request->secskill,
+          'applied_date' => $request->app_date,
+          'sec_skill' => $request->secskill,
+          'ref' => $request->ref,
+          'panelmembers' => $request->p_members,
+          'interview_time' => $request->idatetime,
+          'job_title' => $request->jobtitle,
+          'department' => $request->department_team,
+          'i_place' => $request->iplace,
+          'i_place' => $request->iplace,
+          ]
+          );
+          echo $sql; */
+        DB::table('basic_information')
+                ->where('id', $request->id)
+                ->update([
+                    'name' => $request->username,
+                    'post' => $request->postvalue,
+                    'skillset' => $request->skillset,
+                    'email' => $request->p_email,
+                    'contact_number' => $request->phonenumber,
+                    'education' => $request->qualification,
+                    'total_exp' => $request->exp,
+                    'ctc' => $request->ctc,
+                    'exp_ctc' => $request->expect_ctc,
+                    'notice_prd' => $request->noticeprd,
+                    'dob' => $request->dob,
+                    'location' => $request->location,
+                    'c_company' => $request->current_company,
+                    'domain_exp' => $request->domain_exp,
+                    'primary_skill' => $request->primary_skill,
+                    'sec_skill' => $request->secskill,
+                    'applied_date' => $request->app_date,
+                   
+                    'ref' => $request->ref,
+        ]);
+         DB::table('schedule_details')
+                ->where('b_id', $request->id)
+                ->update([
+                  'panelmembers' => $request->p_members,
+          'interview_time' => $request->idatetime,
+          'job_title' => $request->jobtitle,
+          'department' => $request->department_team,
+          'i_place' => $request->iplace,
+         'rating'=>$request->interview_rating,
+                     'commemts'=>$request->comments,
+        ]);
+          DB::table('rejection_reason')
+                ->where('b_id', $request->id)
+                ->update([
+                  'c_status' => $request->c_status,
+          'reasons' => $request->reason,
+          'remarks' => $request->remark,
+         
+        ]);
+        
+        return response()->json([
+                    'status' => 200,
+                    'message' => "Update content successfully",
+        ]);
+    }
+    public function deleteCandidate($id)
+    {
+      DB::table('basic_information')->where('id', $id)->delete();
+       DB::table('schedule_details')->where('b_id', $id)->delete();
+          DB::table('rejection_reason')->where('b_id', $id)->delete();
+           DB::table('offer_letter')->where('fk_can_id', $id)->delete();
+            return response()->json([
+                    'status' => 200,
+                    'message' => "Delete content successfully",
+        ]);
+    }
+            
 }

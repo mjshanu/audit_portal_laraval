@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Branches;
-
+use Illuminate\Support\Facades\DB;
 class BranchController extends Controller {
 
     public function store(Request $request) {
@@ -51,6 +51,17 @@ class BranchController extends Controller {
                     'message' => 'Branch updated successfully',
         ]);
     }
+    public function location()
+    {
+         $location = DB::table('branches')
+                ->select('branch_name','branch_location','id')
+                ->get();
+     
+           return response()->json([
+                    'status' => 200,
+                    'location' =>$location ,
+        ]);
+    }
     public function destroy($id) {
     $branches= Branches::find($id);
      $branches->delete();
@@ -59,5 +70,6 @@ class BranchController extends Controller {
                     'message' => 'Branches Deleted successfully',
         ]);
 }
+
 
 }

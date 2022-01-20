@@ -22,6 +22,7 @@
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_01_04_071552_create_candidate_log.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/JobController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/JobpostController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Kernel.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/.env</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_121908_create_job_post_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Middleware/VerifyCsrfToken.php</file>

@@ -137,7 +137,7 @@ class CandidateController extends Controller {
     public function release_data_edit($id) {
         $users = DB::table('offer_letter')
                 ->select()
-                ->where('fk_can_id', $id)
+                ->where('offer_id', $id)
                 ->get();
         return response()->json([
                     'status' => 200,

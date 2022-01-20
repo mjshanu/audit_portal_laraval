@@ -38,6 +38,7 @@ Route::post('/edit_column_name_ref',[CandidateController::class,'edit_column_nam
 Route::delete('/delete_organization/{id}',[OrganizationController::class,'destroy']);
 Route::get('/deleteCandidate/{id}',[CandidateController::class,'deleteCandidate']);
 Route::post('/add_branches',[BranchController::class,'store']);
+Route::get('/getLocationBranch',[BranchController::class,'location']);
 Route::get('/editfecthbranchdata/{id}',[BranchController::class,'edit']);
 Route::put('/update_branch',[BranchController::class,'update']);
 Route::delete('/delete_branches/{id}',[BranchController::class,'destroy']);

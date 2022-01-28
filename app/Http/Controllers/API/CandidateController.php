@@ -158,7 +158,7 @@ class CandidateController extends Controller {
     }
 
     public function edit_column_name_ref(Request $request) {
-        return $request->all();
+        //return $request->all();
         $username = $request->username;
         $post = $request->post;
         $skillset = $request->skillset;
@@ -361,10 +361,131 @@ class CandidateController extends Controller {
        DB::table('schedule_details')->where('b_id', $id)->delete();
           DB::table('rejection_reason')->where('b_id', $id)->delete();
            DB::table('offer_letter')->where('fk_can_id', $id)->delete();
+           $candidate_status = DB::table('candidate_log')->insert(
+                array(
+                    'fk_can_id' => $id,
+                    'status_name' => 'Delete Employee',
+                )
+        );
             return response()->json([
                     'status' => 200,
                     'message' => "Delete content successfully",
         ]);
     }
-            
+  public function Updateboarddetails(Request $request) {
+     //return $request->all();
+     $column_name=$request->edit_basic_column_name;
+      $username = $request->username;
+        $post = $request->post;
+        $skillset = $request->skillset;
+        $email = $request->p_email;
+        $phonenumber = $request->phonenumber;
+        $qualification = $request->qualification;
+        $expectsala = $request->expect_ctc;
+        $currentctc = $request->current_ctc;
+        $exp = $request->exp;
+        $noticeprd = $request->noticeprd;
+        $dob = $request->dob;
+        $location = $request->location;
+        $current_company = $request->current_company;
+        $domain_exp = $request->domain_exp;
+        $appdate = $request->app_date;
+        $primary_skill = $request->primary_skill;
+        $secskill = $request->secskill;
+        $ref = $request->ref;
+         $edit_panel_member = $request->edit_panel_members;
+          $edi_idatetime = $request->edi_idatetime;
+        $edit_iplace = $request->edit_iplace;
+        $edit_jobtitle = $request->edit_jobtitle;
+        $edit_department_team = $request->edit_department_team;
+        $edit_interview_rating = $request->edit_interview_rating;
+        $edit_s_id = $request->edit_s_id;
+        $edit_comments = $request->edit_comments;
+       
+    if($column_name==='Inprogress')
+     {
+         DB::table('basic_information')
+                ->where('id', $request->edit_b_id)
+                ->update([
+                    'name' =>  $username ,
+                    'post' => $post,
+                    'skillset' =>  $skillset,
+                    'email' =>  $email,
+                    'contact_number' => $phonenumber,
+                    'education' => $qualification,
+                    'total_exp' => $exp,
+                    'ctc' =>  $currentctc ,
+                    'exp_ctc' => $expectsala,
+                    'notice_prd' =>  $noticeprd,
+                    'dob' =>  $dob ,
+                    'location' =>$location,
+                    'c_company' => $current_company,
+                    'domain_exp' => $domain_exp,
+                    'primary_skill' =>  $primary_skill,
+                    'sec_skill' => $secskill,
+                    'applied_date' => $appdate ,
+                   
+                    'ref' => $ref,
+        ]);  
+     }
+       else if($column_name=='Schedule')
+      {
+        DB::table('schedule_details')
+                ->where('s_id', $edit_s_id)
+                ->update([
+                  'panelmembers' => $edit_panel_member,
+          'interview_time' =>  $edi_idatetime,
+          'job_title' => $edit_jobtitle,
+          'department' => $edit_department_team,
+          'i_place' => $edit_iplace,
+         'rating'=>$edit_interview_rating,
+                     'commemts'=>$edit_comments,
+        ]); 
+          
+      }
+       else if($column_name=='Rejection')
+      {
+         
+        DB::table('rejection_reason')
+                ->where('r_id', $request->edit_r_id)
+                ->update([
+                  'c_status' => $request->edit_rejectionstatus,
+          'reasons' => $request->edit_reason,
+          'remarks' => $request->edit_remark,
+         
+        ]);
+          
+      }
+      else {
+            $releaseid = $request->edit_release_id;
+        $joiningdate = $request->edit_release_date;
+
+        //  $newjoingdate = str_replace('_', ' ', $joiningdate);
+        $offerdate = str_replace('-', '', $joiningdate);
+
+        $todaydate = date('Y-m-d');
+        $offertoday = str_replace('-', '', $todaydate);
+//    echo $releaseid;
+//    //$ecode=200+$releaseid;
+//   // $codename="ENS/CHR/OL/112021/01122021/".$ecode;
+        $place = DB::table('schedule_details')
+                ->select('i_place')
+                ->where('b_id', $releaseid)
+                ->get();
+
+        $place = $place[0]->i_place;
+        $offid = 200 + $releaseid;
+        $offercode = 'ENS' . '/' . $place . '/' . 'OL' . '/' . $offertoday . '/' . $offerdate . '/' . $offid;
+          DB::table('offer_letter')
+                ->where('offer_id', $request->edit_release_id)
+                ->update([
+                  'offer_code' => $offercode,
+          'offer_release_date' => $joiningdate,
+         ]);
+      }
+     return response()->json([
+                    'status' => 200,
+                    'message' => "Data updated successfully",
+        ]);
+  }     
 }

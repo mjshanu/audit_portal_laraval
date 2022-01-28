@@ -85,8 +85,14 @@ class EmployeeController extends Controller {
     }
 
     public function store(Request $request) {
-        //return $request->all();
-
+    //return $request->file('resume');
+   // return $request->all();
+    if($request->hasFile('resume')){
+    $file=$request->file('resume');
+    $extension=$file->getClientOriginalExtension();
+    $filename= time().'.'.$extension;
+    $file->move('uploads/resume',$filename);
+    }
         $insert = DB::table('basic_information')->insertGetId(
                 array(
                     'name' => $request->username,
@@ -107,7 +113,8 @@ class EmployeeController extends Controller {
                     'ref' => $request->ref,
                     'applied_date' => $request->app_date,
                     'notice_prd' => $request->noticeprd,
-                    'status' => 'Inprogress'
+                    'status' => 'Inprogress',
+                    'resume' => $filename
                 )
         );
       $candidate_status=  DB::table('candidate_log')->insert(

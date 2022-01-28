@@ -23,6 +23,7 @@ Route::get('/getscheduledata/{id}',[CandidateController::class,'schedule_data_ed
 Route::get('/getrejectdata/{id}',[CandidateController::class,'reject_data_edit']);
 Route::get('/getreleasedata/{id}',[CandidateController::class,'release_data_edit']);
 Route::get('/getcandidatesdetails',[CandidateController::class,'getcandidatesdetails']);
+Route::post('/Updateboarddetails',[CandidateController::class,'Updateboarddetails']);
 Route::get('/getCandidatefullDetails/{id}',[CandidateController::class,'getcandidate']);
 Route::post('/add_organization',[OrganizationController::class,'store']);
 Route::get('/getOrganization',[OrganizationController::class,'index']);
@@ -31,7 +32,7 @@ Route::get('/getOrganizationvalues',[OrganizationController::class,'getorgbranch
 Route::get('/getOrgnaizationname',[OrganizationController::class,'organaisationname']);
 Route::get('/getLocation',[OrganizationController::class,'locationname']);
 Route::get('/editfecthorgdata/{id}',[OrganizationController::class,'edit']);
-Route::get('/editfecthbasicdata/{id}',[CandidateController::class,'basic_data_edit']);
+
 Route::put('/update_organization',[OrganizationController::class,'update']);
 Route::post('/updaterecruitement',[CandidateController::class,'update_recruitement']);
 Route::post('/edit_column_name_ref',[CandidateController::class,'edit_column_name_ref']);

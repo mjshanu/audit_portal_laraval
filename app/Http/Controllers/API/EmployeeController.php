@@ -102,7 +102,7 @@ class EmployeeController extends Controller {
                     'education' => $request->qualification,
                     'exp_ctc' => $request->expect_ctc,
                     'ctc' => $request->ctc,
-                    'skillset' => $request->skillset,
+                    'skillset' => $request->skillset_input,
                     'total_exp' => $request->exp,
                     'dob' => $request->dob,
                     'location' => $request->location,

@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/.git/config</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/CandidateController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/BranchController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/JobController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/routes/api.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/.env</file>
         </group>
     </open-files>
 </project-private>

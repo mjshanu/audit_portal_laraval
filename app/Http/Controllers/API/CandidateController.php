@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use File;
 class CandidateController extends Controller {
 
     public function add_schedule(Request $request) {
@@ -84,7 +84,8 @@ class CandidateController extends Controller {
                 array(
                     'fk_can_id' => $releaseid,
                     'offer_code' => $offercode,
-                    'offer_release_date'=>$joiningdate
+                    'offer_release_date'=>$joiningdate,
+                    
                 )
         );
         $candidate_status = DB::table('candidate_log')->insert(
@@ -374,6 +375,9 @@ class CandidateController extends Controller {
     }
   public function Updateboarddetails(Request $request) {
      //return $request->all();
+    // return $request->file('resume');
+     
+    
      $column_name=$request->edit_basic_column_name;
       $username = $request->username;
         $post = $request->post;
@@ -401,9 +405,24 @@ class CandidateController extends Controller {
         $edit_interview_rating = $request->edit_interview_rating;
         $edit_s_id = $request->edit_s_id;
         $edit_comments = $request->edit_comments;
+         $resume=DB::table('basic_information')->where('id', $request->edit_b_id)->select('resume')->get();
+         
+        if($request->hasFile('resume')){
        
+         $file=$request->file('resume');
+          $extension=$file->getClientOriginalExtension();
+           $filename= time().'.'.$extension;
+          
+        
+          if (File::exists(public_path('uploads/resume/'.$resume[0]->resume))) {
+               File::delete(public_path('uploads/resume/'.$resume[0]->resume));
+          }
+           $file->move('uploads/resume',$filename);
+    }
     if($column_name==='Inprogress')
      {
+        $file=(!empty($filename))?$filename:$resume[0]->resume;
+      
          DB::table('basic_information')
                 ->where('id', $request->edit_b_id)
                 ->update([
@@ -424,7 +443,7 @@ class CandidateController extends Controller {
                     'primary_skill' =>  $primary_skill,
                     'sec_skill' => $secskill,
                     'applied_date' => $appdate ,
-                   
+                    'resume' =>$file,
                     'ref' => $ref,
         ]);  
      }
@@ -487,5 +506,48 @@ class CandidateController extends Controller {
                     'status' => 200,
                     'message' => "Data updated successfully",
         ]);
-  }     
+  }  
+  public function release_employee() {
+     
+       $users = DB::table('basic_information')
+            ->join('offer_letter', 'basic_information.id', '=', 'offer_letter.fk_can_id')
+             ->select('*')
+             
+            ->get();
+         return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]);
+  }
+  public function viewlog($id)
+  {
+      $viewlog=DB::table('candidate_log')->where('fk_can_id', $id)->select()->get();
+       return response()->json([
+                    'status' => 200,
+                    'log' => $viewlog,
+        ]);
+  }
+  public function editfetchCandidatefulldata($id)
+  {
+      $users = DB::table('basic_information')
+            ->join('offer_letter', 'basic_information.id', '=', 'offer_letter.fk_can_id')
+             ->select('*')
+              ->where('fk_can_id', $id)
+            ->get();
+       return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]); 
+   /*  $users = DB::table('basic_information')
+            ->join('offer_letter', 'basic_information.id', '=', 'offer_letter.fk_can_id')
+             ->select('*')
+             
+            ->get();
+         return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]); 
+  }*/
+ 
+}
 }

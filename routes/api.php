@@ -18,6 +18,7 @@ Route::post('/updatecolumn',[EmployeeController::class,'updatecolumn']);
 Route::post('/add_schedule',[CandidateController::class,'add_schedule']);
 Route::post('/add_rejection',[CandidateController::class,'rejection']);
 Route::post('/add_offerletter',[CandidateController::class,'generate_offer_letter']);
+Route::get('/getcandidates_release_details',[CandidateController::class,'release_employee']);
 Route::get('/editfecthbasicdata/{id}',[CandidateController::class,'basic_data_edit']);
 Route::get('/getscheduledata/{id}',[CandidateController::class,'schedule_data_edit']);
 Route::get('/getrejectdata/{id}',[CandidateController::class,'reject_data_edit']);
@@ -25,6 +26,8 @@ Route::get('/getreleasedata/{id}',[CandidateController::class,'release_data_edit
 Route::get('/getcandidatesdetails',[CandidateController::class,'getcandidatesdetails']);
 Route::post('/Updateboarddetails',[CandidateController::class,'Updateboarddetails']);
 Route::get('/getCandidatefullDetails/{id}',[CandidateController::class,'getcandidate']);
+Route::get('/viewlog/{id}',[CandidateController::class,'viewlog']);
+Route::get('/editfetchCandidatefulldata/{id}',[CandidateController::class,'editfetchCandidatefulldata']);
 Route::post('/add_organization',[OrganizationController::class,'store']);
 Route::get('/getOrganization',[OrganizationController::class,'index']);
 Route::get('/editfecthscheduledata/{id}',[EmployeeController::class,'editschedule']);

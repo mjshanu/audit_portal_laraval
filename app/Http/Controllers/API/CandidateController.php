@@ -550,4 +550,64 @@ class CandidateController extends Controller {
   }*/
  
 }
+public function editfetchCandidatestatusdata($id)
+  {
+      $users = DB::table('basic_information')
+            ->join('offer_letter', 'basic_information.id', '=', 'offer_letter.fk_can_id')
+             ->select('*')
+              ->where('fk_can_id', $id)
+            ->get();
+      
+      $ecode=200;
+      $getlstcode= DB::table('audit_employeeid')->select('*')->orderBy('id', 'desc')->take(1)->get();
+     // echo '<pre>';print_r($getlstcode);
+    if(empty($getlstcode->toArray()))
+{
+   $last_id='200';  
+}
+else 
+{
+    $last_id=$getlstcode[0]->emp_id+1;
+}
+DB::table('audit_employeeid')->insert(
+    ['emp_id' => $last_id, 'branch_name' => 'CHN']
+);
+$users[0]->empcode=$last_id;
+
+ return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]); 
+     /* if(!empty($getlstcode))
+      {
+      $last_id=$getlstcode[0]->emp_id;
+      }
+      else {
+        $last_id='200';  
+      }
+      echo $last_id;
+     /*if($last_id=='')
+     {
+         echo 'null';
+     }
+     else {
+         echo $last_id;
+     }*/
+    /*   return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]); */
+   /*  $users = DB::table('basic_information')
+            ->join('offer_letter', 'basic_information.id', '=', 'offer_letter.fk_can_id')
+             ->select('*')
+             
+            ->get();
+         return response()->json([
+                    'status' => 200,
+                    'users' => $users,
+        ]); 
+  }*/
+ 
+}
+
 }

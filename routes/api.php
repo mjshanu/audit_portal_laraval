@@ -5,6 +5,7 @@ use App\Http\Controllers\API\BranchController;
 use App\Http\Controllers\API\JobpostController;
 use App\Http\Controllers\API\JobController;
 use App\Http\Controllers\API\CandidateController;
+use App\Http\Controllers\API\Audit_EmployeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -28,6 +29,7 @@ Route::post('/Updateboarddetails',[CandidateController::class,'Updateboarddetail
 Route::get('/getCandidatefullDetails/{id}',[CandidateController::class,'getcandidate']);
 Route::get('/viewlog/{id}',[CandidateController::class,'viewlog']);
 Route::get('/editfetchCandidatefulldata/{id}',[CandidateController::class,'editfetchCandidatefulldata']);
+Route::get('/editfetchCandidatestatusdata/{id}',[CandidateController::class,'editfetchCandidatestatusdata']);
 Route::post('/add_organization',[OrganizationController::class,'store']);
 Route::get('/getOrganization',[OrganizationController::class,'index']);
 Route::get('/editfecthscheduledata/{id}',[EmployeeController::class,'editschedule']);
@@ -35,7 +37,7 @@ Route::get('/getOrganizationvalues',[OrganizationController::class,'getorgbranch
 Route::get('/getOrgnaizationname',[OrganizationController::class,'organaisationname']);
 Route::get('/getLocation',[OrganizationController::class,'locationname']);
 Route::get('/editfecthorgdata/{id}',[OrganizationController::class,'edit']);
-
+Route::post('/Addemployee',[Audit_EmployeeController::class,'store']);
 Route::put('/update_organization',[OrganizationController::class,'update']);
 Route::post('/updaterecruitement',[CandidateController::class,'update_recruitement']);
 Route::post('/edit_column_name_ref',[CandidateController::class,'edit_column_name_ref']);
@@ -51,6 +53,7 @@ Route::post('/add_jobs',[JobController::class,'store']);
 Route::get('/getJobs',[JobController::class,'index']);
 Route::get('/editfecthjobdata/{id}',[JobController::class,'edit']);
 Route::put('/update_job',[JobController::class,'update']);
+Route::post('/user-login',[Audit_EmployeeController::class,'userLogin']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJobPostTable extends Migration
+class CreateAuditCalendarMapTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateJobPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_post', function (Blueprint $table) {
+        Schema::create('audit_calendar_map', function (Blueprint $table) {
             $table->id();
-            $table->string('post_name');
-             $table->integer('branch_company');
+             $table->foreignId('fk_hol_map_id')->references('id')->on('audit_holidays_calendar');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateJobPostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('job_post');
+        Schema::dropIfExists('audit_calendar_map');
     }
 }

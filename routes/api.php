@@ -6,6 +6,7 @@ use App\Http\Controllers\API\JobpostController;
 use App\Http\Controllers\API\JobController;
 use App\Http\Controllers\API\CandidateController;
 use App\Http\Controllers\API\Audit_EmployeeController;
+use App\Http\Controllers\API\HolidayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -54,6 +55,8 @@ Route::get('/getJobs',[JobController::class,'index']);
 Route::get('/editfecthjobdata/{id}',[JobController::class,'edit']);
 Route::put('/update_job',[JobController::class,'update']);
 Route::post('/user-login',[Audit_EmployeeController::class,'userLogin']);
+Route::post('/add_holidays',[HolidayController::class,'store']);
+Route::get('/getHolidays',[HolidayController::class,'index']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

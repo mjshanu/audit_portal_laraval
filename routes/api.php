@@ -57,6 +57,9 @@ Route::put('/update_job',[JobController::class,'update']);
 Route::post('/user-login',[Audit_EmployeeController::class,'userLogin']);
 Route::post('/add_holidays',[HolidayController::class,'store']);
 Route::get('/getHolidays',[HolidayController::class,'index']);
+Route::delete('/delete_holidays/{id}',[HolidayController::class,'destroy']);
+Route::get('/edit_holidays/{id}',[HolidayController::class,'edit']);
+Route::put('/update_holidays',[HolidayController::class,'update']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

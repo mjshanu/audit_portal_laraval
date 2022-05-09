@@ -40,4 +40,23 @@ class HolidayController extends Controller {
                     'holiday' => $holidays,
         ]);
      }
+       public function destroy($id) {
+    $branches= Holiday::find($id);
+     $branches->delete();
+     return response()->json([
+                    'status' => 200,
+                    'message' => 'Holiday  Deleted successfully',
+        ]);
+}
+ public function edit($id) {
+        $editholidays = Holiday::find($id);
+        return response()->json([
+                    'status' => 200,
+                    'branch' => $editholidays,
+        ]);
+    }
+ public function update(Request $request) {
+ return $request->all();
+ }
+
 }

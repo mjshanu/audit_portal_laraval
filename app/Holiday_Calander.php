@@ -11,8 +11,8 @@ class Holiday_Calander extends Model
         'fk_hol_id',
         'hol_calendar_name',
         'hol_type',
-        'hol_location_name',
-        'hol_project_name'
+        'hol_location_project_name',
+        'created_by'
     ];
 
 }

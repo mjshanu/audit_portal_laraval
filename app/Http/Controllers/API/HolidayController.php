@@ -12,7 +12,8 @@ class HolidayController extends Controller {
       
         $holiday = new Holiday;
         $getmonth = strtotime($request->holiday_date);
-        $day = date('D', $getmonth) . 'day';
+        $day = date('l', $getmonth);
+       
         $holiday->hol_name = $request->holiday_name;
         $holiday->hol_date = $request->holiday_date;
         $holiday->hol_day = $day;
@@ -40,4 +41,30 @@ class HolidayController extends Controller {
                     'holiday' => $holidays,
         ]);
      }
+       public function destroy($id) {
+    $branches= Holiday::find($id);
+     $branches->delete();
+     return response()->json([
+                    'status' => 200,
+                    'message' => 'Holiday  Deleted successfully',
+        ]);
+}
+ public function edit($id) {
+        $editholidays = Holiday::find($id);
+        return response()->json([
+                    'status' => 200,
+                    'branch' => $editholidays,
+        ]);
+    }
+ public function update(Request $request) {
+ return $request->all();
+ }
+ public function holidaylist(){
+   $holidays=  Holiday::all('id', 'hol_name');
+     return response()->json([
+                    'status' => 200,
+                    'holiday' => $holidays,
+        ]);
+ }
+
 }

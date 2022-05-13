@@ -16,6 +16,8 @@ class CreateAuditCalendarMapTable extends Migration
         Schema::create('audit_calendar_map', function (Blueprint $table) {
             $table->id();
              $table->foreignId('fk_hol_map_id')->references('id')->on('audit_holidays_calendar');
+              $table->foreignId('fk_hol_id')->references('id')->on('audit_holidays');
+              $table->enum('optional',[0,1])->default(0);
             $table->timestamps();
         });
     }

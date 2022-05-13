@@ -12,7 +12,8 @@ class HolidayController extends Controller {
       
         $holiday = new Holiday;
         $getmonth = strtotime($request->holiday_date);
-        $day = date('D', $getmonth) . 'day';
+        $day = date('l', $getmonth);
+       
         $holiday->hol_name = $request->holiday_name;
         $holiday->hol_date = $request->holiday_date;
         $holiday->hol_day = $day;
@@ -57,6 +58,13 @@ class HolidayController extends Controller {
     }
  public function update(Request $request) {
  return $request->all();
+ }
+ public function holidaylist(){
+   $holidays=  Holiday::all('id', 'hol_name');
+     return response()->json([
+                    'status' => 200,
+                    'holiday' => $holidays,
+        ]);
  }
 
 }

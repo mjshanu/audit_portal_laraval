@@ -17,9 +17,9 @@ class CreateAuditHolidaysCalendarTable extends Migration
             $table->id();
             $table->foreignId('fk_hol_id')->references('id')->on('audit_holidays');
             $table->string('hol_calendar_name');
-             $table->string('hol_type');
-              $table->string('hol_location_name');
-              $table->string('hol_project_name');  
+             $table->integer('hol_type');
+              $table->string('hol_location_project_name');
+               $table->string('created_by');
             $table->timestamps();
         });
     }

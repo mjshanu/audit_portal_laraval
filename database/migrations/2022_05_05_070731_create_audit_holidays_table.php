@@ -17,7 +17,8 @@ class CreateAuditHolidaysTable extends Migration
             $table->id();
              $table->string('hol_name');
                $table->string('hol_day');
-             $table->timestamp('hol_date');
+             $table->date('hol_date');
+             $table->enum('status',[ 'active', 'disabled'])->default('active');
             $table->timestamps();
         });
     }

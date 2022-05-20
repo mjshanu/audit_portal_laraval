@@ -89,6 +89,10 @@ class HolidaycalendarController extends Controller
     public function delete_holidaynames($id)
 {
     DB::table('audit_calendar_map')->delete($id);
+    return response()->json([
+                    'status' => 200,
+                    'message' => "Deleted successfully",
+        ]);
 }
 }
 

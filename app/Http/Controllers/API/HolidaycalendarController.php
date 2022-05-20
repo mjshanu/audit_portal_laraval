@@ -79,13 +79,17 @@ class HolidaycalendarController extends Controller
        $optionid=$ids[1];
     $query=DB::table('audit_calendar_map')
 ->where('id',$optionid)
-->update(['optional'=>'1']);
+->update(['optional'=>$ids[0]]);
    
       return response()->json([
                     'status' => 200,
                     'message' => "updated successfully",
         ]);
     }
+    public function delete_holidaynames($id)
+{
+    DB::table('audit_calendar_map')->delete($id);
+}
 }
 
 

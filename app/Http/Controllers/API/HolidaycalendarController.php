@@ -52,8 +52,8 @@ class HolidaycalendarController extends Controller
    ->distinct()             
     ->get();*/
        $holidylist = DB::select("select distinct `hol_calendar_name`, `audit_holidays_calendar`.`id`,(select count(audit_calendar_map.id) from audit_calendar_map where optional='0' and fk_hol_map_id=audit_holidays_calendar.id)publicount,"
-               . "(select count(audit_calendar_map.id) from audit_calendar_map where optional='1' and fk_hol_map_id=audit_holidays_calendar.id)optionalcount from `audit_holidays_calendar` inner join `audit_calendar_map` on `audit_calendar_map`.`fk_hol_map_id` = `audit_holidays_calendar`.`id`"
-               . " inner join `audit_holidays` on `audit_holidays`.`id` = `audit_calendar_map`.`fk_hol_id`");
+               . "(select count(audit_calendar_map.id) from audit_calendar_map where optional='1' and fk_hol_map_id=audit_holidays_calendar.id)optionalcount from `audit_holidays_calendar` left join `audit_calendar_map` on `audit_calendar_map`.`fk_hol_map_id` = `audit_holidays_calendar`.`id`"
+               . " left join `audit_holidays` on `audit_holidays`.`id` = `audit_calendar_map`.`fk_hol_id`");
        return response()->json([
                     'sta' => 200,
                     'holidaylist' => $holidylist,

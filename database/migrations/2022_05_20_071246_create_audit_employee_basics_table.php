@@ -26,6 +26,8 @@ class CreateAuditEmployeeBasicsTable extends Migration {
             $table->string('emp_region');
              $table->enum('status',[ 'active', 'disabled'])->default('active');
             $table->integer('fk_emp_previous_exp');
+             $table->string('image');
+              $table->foreignId('emp_fk_dep')->references('id')->on('audit_department');
             $table->timestamps();
         });
     }

@@ -8,6 +8,8 @@ use App\Http\Controllers\API\CandidateController;
 use App\Http\Controllers\API\Audit_EmployeeController;
 use App\Http\Controllers\API\HolidayController;
 use App\Http\Controllers\API\HolidaycalendarController;
+use App\Http\Controllers\API\DepartmentController;
+use App\Http\Controllers\API\DesignationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -66,6 +68,11 @@ Route::post('/add_holidays_calendar',[HolidaycalendarController::class,'store'])
 Route::get('/getHolidaynames',[HolidaycalendarController::class,'getHolidaynames']);
 Route::get('/getholidysbyid/{id}',[HolidaycalendarController::class,'viewholidaysbyid']);
 Route::get('/getupdateholiday/{id}',[HolidaycalendarController::class,'optionalholidayupdate']);
+Route::post('/add_departments',[DepartmentController::class,'store']);
+Route::get('/getDepartmentValues',[DepartmentController::class,'index']);
+Route::get('/getDepartmentName',[DepartmentController::class,'departmentname']);
+Route::post('/add_designation',[DesignationController::class,'store']);
+Route::get('/getDepartmentValues',[DepartmentController::class,'getdepartmentdesignation']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

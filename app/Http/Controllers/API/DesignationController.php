@@ -21,5 +21,13 @@ class DesignationController extends Controller
                     'message' => 'Designation added successfully',
         ]);
     }
+    public function index()
+    {
+         $designation = Designation::all('id', 'designation_name');
+          return response()->json([
+                    'status' => 200,
+                    'designation' => $designation,
+        ]);
+    }
    
 }

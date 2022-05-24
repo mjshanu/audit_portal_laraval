@@ -19,6 +19,7 @@ class EmployeeBasic extends Model {
         'emp_holiday_calander',
         'emp_region',
         'fk_emp_reporting',
+        'fk_emp_previous_exp',
         'fk_emp_functional_manager',
     ];
 

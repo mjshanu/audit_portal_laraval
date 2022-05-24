@@ -25,7 +25,7 @@ class CreateAuditEmployeeBasicsTable extends Migration {
             $table->foreignId('emp_holiday_calander')->references('id')->on('audit_holidays_calendar');
             $table->string('emp_region');
              $table->enum('status',[ 'active', 'disabled'])->default('active');
-           
+            $table->integer('fk_emp_previous_exp');
             $table->timestamps();
         });
     }

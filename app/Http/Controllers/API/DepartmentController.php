@@ -60,5 +60,14 @@ class DepartmentController extends Controller
                     'org' => $organization,
         ]);
     }
+    
+        public function edit($id)
+    {
+        $editorgaization=Department::find($id);
+           return response()->json([
+                    'status' => 200,
+                    'dep' => $editorgaization,
+        ]);
+    }
 
 }

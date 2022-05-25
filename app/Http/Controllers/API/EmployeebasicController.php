@@ -33,6 +33,7 @@ class EmployeebasicController extends Controller {
         $employee->emp_gender = $request->emp_gender;
         $employee->emp_holiday_calander = $request->emp_holiday_calender;
         $employee->emp_fk_dep = $request->emp_department;
+         $employee->emp_location = $request->emp_location;
           $employee->image = $filename;
         $employee->save();
         $lastId = $employee->id;

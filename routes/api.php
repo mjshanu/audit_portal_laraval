@@ -79,7 +79,7 @@ Route::get('/delete_holidaynames/{id}',[HolidaycalendarController::class,'delete
 Route::post('/add_audit_employees',[EmployeebasicController::class,'store']);
 Route::get('/getEmployeeDetails',[EmployeebasicController::class,'viewlist']);
 Route::get('/editfecthdepdata/{id}',[DepartmentController::class,'edit']);
-
+Route::put('/update_department',[DepartmentController::class,'update']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

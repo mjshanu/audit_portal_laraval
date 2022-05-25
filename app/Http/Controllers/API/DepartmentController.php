@@ -69,5 +69,16 @@ class DepartmentController extends Controller
                     'dep' => $editorgaization,
         ]);
     }
-
+public function update(Request $request)
+{
+    $id=$request->id;
+    $department= Department::find($id);
+           $department->department_name	= $request->department_name;
+           $department->department_code	= $request->department_code;
+           $department->update();
+             return response()->json([
+                    'status' => 200,
+                    'message' => 'Department updated successfully',
+        ]);
+}
 }

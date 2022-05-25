@@ -81,4 +81,12 @@ public function update(Request $request)
                     'message' => 'Department updated successfully',
         ]);
 }
+public function destroy($id) {
+    $department= Department::find($id);
+     $department->delete();
+     return response()->json([
+                    'status' => 200,
+                    'message' => 'Departments Deleted successfully',
+        ]);
+}
 }

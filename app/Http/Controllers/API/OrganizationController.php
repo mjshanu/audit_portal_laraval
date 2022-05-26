@@ -13,7 +13,7 @@ class OrganizationController extends Controller
     {
       // return $request->all();
         $organization= new Organization;
-        $organization->org_code=$request->org_code;
+        $organization->org_code=strtoupper($request->org_code);
         $organization->org_name=$request->org_name;
         $organization->org_type=$request->org_type;
          $organization->org_category=$request->org_category;
@@ -71,7 +71,7 @@ public function update(Request $request)
 {
     $id=$request->id;
     $organization= Organization::find($id);
-        $organization->org_code=$request->org_code;
+        $organization->org_code=strtoupper($request->org_code);
         $organization->org_name=$request->org_name;
         $organization->org_type=$request->org_type;
          $organization->org_category=$request->org_category;

@@ -12,7 +12,7 @@ class DepartmentController extends Controller
       //return  $request->all();
           $department=new Department;
           $department->department_name	= $request->department_name;
-           $department->department_code	= $request->department_code;
+           $department->department_code	= strtoupper($request->department_code);
            $department->save();
            return response()->json([
                     'status' => 200,
@@ -74,7 +74,7 @@ public function update(Request $request)
     $id=$request->id;
     $department= Department::find($id);
            $department->department_name	= $request->department_name;
-           $department->department_code	= $request->department_code;
+           $department->department_code	= strtoupper($request->department_code);
            $department->update();
              return response()->json([
                     'status' => 200,

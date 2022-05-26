@@ -13,7 +13,7 @@ class DesignationController extends Controller
        
         $designation = new Designation;
         $designation->designation_name = $request->designation_name;
-         $designation->designation_code = $request->designation_code;
+         $designation->designation_code = strtoupper($request->designation_code);
           $designation->fk_department_id = $request->department_name;
          $designation->level_type = $request->level_name;
           $designation->designation_status = 1;

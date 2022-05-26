@@ -82,8 +82,10 @@ public function update(Request $request)
         ]);
 }
 public function destroy($id) {
-    $department= Department::find($id);
-     $department->delete();
+    //$department= Department::find($id);
+    $q = 'DELETE * FROM audit_department LEFT JOIN audit_designation on audit_department.id=audit_designation.	fk_department_id  where udit_department.id = ?';   
+    $status = \DB::delete($q, array($id));
+   //  $department->delete();
      return response()->json([
                     'status' => 200,
                     'message' => 'Departments Deleted successfully',

@@ -29,5 +29,17 @@ class DesignationController extends Controller
                     'designation' => $designation,
         ]);
     }
+    public function edit($id)
+    {
+        $results = DB::table('audit_designation')
+                ->select('audit_designation.*','department_name','audit_department.id as did')
+                ->join('audit_department', 'audit_designation.fk_department_id', '=', 'audit_department.id')
+                ->where('audit_designation.id', '=', $id)
+                  ->get();
+     return response()->json([
+                    'status' => 200,
+                    'designation' => $results,
+        ]);
+    }
    
 }

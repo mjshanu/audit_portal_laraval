@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Designation;
+use DB;
+
 class DesignationController extends Controller
 {
     public function store(Request $request) {

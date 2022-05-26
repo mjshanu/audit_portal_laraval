@@ -17,7 +17,9 @@ class CreateAuditDesignationTable extends Migration {
             $table->string('designation_name');
             $table->string('designation_code');
             $table->string('level_type');
-            $table->foreignId('fk_department_id')->references('id')->on('audit_department');
+           
+          $table->bigInteger('fk_department_id')->unsigned();
+    $table->foreign('fk_department_id')->references('id')->on('audit_department')->onDelete('cascade');
             $table->enum('designation_status', [0, 1])->default(0);
             $table->timestamps();
         });

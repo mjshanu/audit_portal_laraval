@@ -19,12 +19,20 @@ class EmployeebasicController extends Controller {
     $file->move('uploads/profile',$filename);
     }
     else {
-        $filename="default.png";
+       
+        if($request->emp_gender=="male")
+        {
+            
+        $filename="men.png";
+        }
+        else{
+             $filename="default-women.png"; 
+        } 
     }
        
         $employee = new EmployeeBasic;
         $employee->emp_name = $request->emp_name;
-        $employee->emp_code = $request->emp_code;
+        $employee->emp_code = strtoupper($request->emp_code);
         $employee->emp_fk_des_id = $request->emp_desigination;
         $employee->emp_joining_date = $request->emp_joindate;
         $employee->emp_company_email_id = $request->emp_email;

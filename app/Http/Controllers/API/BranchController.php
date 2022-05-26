@@ -12,7 +12,7 @@ class BranchController extends Controller {
         //return $request->all();
         $branch = new Branches;
         $branch->branch_name = $request->branch_name;
-        $branch->branch_code = $request->branch_code;
+        $branch->branch_code = strtoupper($request->branch_code);
         $branch->branch_company = $request->branch_company;
         $branch->branch_type = $request->branch_type;
         $branch->branch_location = $request->branch_location;
@@ -38,7 +38,7 @@ class BranchController extends Controller {
         $id = $request->b_id;
         $branch = Branches::find($id);
         $branch->branch_name = $request->branch_name;
-        $branch->branch_code = $request->branch_code;
+        $branch->branch_code = strtoupper($request->branch_code);
         $branch->branch_company = $request->branch_company;
         $branch->branch_type = $request->branch_type;
         $branch->branch_location = $request->branch_location;

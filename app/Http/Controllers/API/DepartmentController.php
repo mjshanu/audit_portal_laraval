@@ -12,7 +12,7 @@ class DepartmentController extends Controller
       //return  $request->all();
           $department=new Department;
           $department->department_name	= $request->department_name;
-           $department->department_code	= $request->department_code;
+           $department->department_code	= strtoupper($request->department_code);
            $department->save();
            return response()->json([
                     'status' => 200,
@@ -60,5 +60,36 @@ class DepartmentController extends Controller
                     'org' => $organization,
         ]);
     }
-
+    
+        public function edit($id)
+    {
+        $editorgaization=Department::find($id);
+           return response()->json([
+                    'status' => 200,
+                    'dep' => $editorgaization,
+        ]);
+    }
+public function update(Request $request)
+{
+    $id=$request->id;
+    $department= Department::find($id);
+           $department->department_name	= $request->department_name;
+           $department->department_code	= strtoupper($request->department_code);
+           $department->update();
+             return response()->json([
+                    'status' => 200,
+                    'message' => 'Department updated successfully',
+        ]);
+}
+public function destroy($id) {
+    //$department= Department::find($id);
+    //$q = 'DELETE FROM audit_department LEFT JOIN audit_designation on audit_department.id=audit_designation.fk_department_id  where udit_department.id = ?'; 
+    $q="DELETE ad.* FROM audit_department ad INNER JOIN audit_designation asd on asd.fk_department_id = aE asd.fk_department_id=?";
+    $status = \DB::delete($q, array($id));
+   //  $department->delete();
+     return response()->json([
+                    'status' => 200,
+                    'message' => 'Departments Deleted successfully',
+        ]);
+}
 }

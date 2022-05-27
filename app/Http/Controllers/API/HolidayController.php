@@ -78,9 +78,9 @@ class HolidayController extends Controller {
                     'holiday' => $holidays,
         ]);
  }
-public function getRemainingholidays($id=1)
+public function getRemainingholidays($id)
 {
-     $holidylist = DB::select("SELECT * FROM audit_holidays WHERE id NOT IN (SELECT fk_hol_id FROM audit_calendar_map where fk_hol_map_id=1)");
+     $holidylist = DB::select("SELECT * FROM audit_holidays WHERE id NOT IN (SELECT fk_hol_id FROM audit_calendar_map where fk_hol_map_id=$id)");
       return response()->json([
                     'status' => 200,
                     'holiday' => $holidylist,

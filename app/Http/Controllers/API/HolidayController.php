@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Holiday;
-
+use DB;
 class HolidayController extends Controller {
 
     public function store(Request $request) {

@@ -63,8 +63,9 @@ class HolidaycalendarController extends Controller
 {
   
     $holidaylist=DB::table('audit_calendar_map')
-           ->select('hol_name','audit_calendar_map.id as auid','hol_date','hol_day','optional')  
+           ->select('hol_name','audit_calendar_map.id as auid','hol_date','hol_day','optional','hol_calendar_name')  
               ->join('audit_holidays', 'audit_calendar_map.fk_hol_id', '=', 'audit_holidays.id')
+             ->join('audit_holidays_calendar', 'audit_holidays_calendar.id', '=', 'audit_calendar_map.fk_hol_map_id')
              ->where('audit_calendar_map.fk_hol_map_id',$id)  
             
             ->get();

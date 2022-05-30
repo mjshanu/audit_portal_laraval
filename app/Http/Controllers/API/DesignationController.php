@@ -43,5 +43,20 @@ class DesignationController extends Controller
                     'designation' => $results,
         ]);
     }
+    
+    public function update(Request $request)
+{
+    $id=$request->id;
+    $designation= Designation::find($id);
+           $department->designation_name= $request->edit_designation_name;
+           $department->designation_code= strtoupper($request->edit_designation_code);
+             $department->level_type= $request->edit_level_type;
+              $department->fk_department_id= $request->edit_department_name;
+           $designation->update();
+             return response()->json([
+                    'status' => 200,
+                    'message' => 'Designation updated successfully',
+        ]);
+}
    
 }

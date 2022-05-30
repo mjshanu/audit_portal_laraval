@@ -48,10 +48,10 @@ class DesignationController extends Controller
 {
     $id=$request->id;
     $designation= Designation::find($id);
-           $department->designation_name= $request->edit_designation_name;
-           $department->designation_code= strtoupper($request->edit_designation_code);
-             $department->level_type= $request->edit_level_type;
-              $department->fk_department_id= $request->edit_department_name;
+           $designation->designation_name= $request->edit_designation_name;
+           $designation->designation_code= strtoupper($request->edit_designation_code);
+             $designation->level_type= $request->edit_level_type;
+              $designation->fk_department_id= $request->edit_department_name;
            $designation->update();
              return response()->json([
                     'status' => 200,

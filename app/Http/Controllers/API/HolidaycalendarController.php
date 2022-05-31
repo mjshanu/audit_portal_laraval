@@ -95,6 +95,24 @@ class HolidaycalendarController extends Controller
                     'message' => "Deleted successfully",
         ]);
 }
+public function addtoExistingValue(Request $request)
+{
+   
+      $hol_data= json_decode($request->holiday_name_drop);
+       $id=$request->id;
+         foreach($hol_data as $holidaydata) 
+             {
+                 $holidayname=$holidaydata->hol_name;
+                 $holid=$holidaydata->id;
+                 DB::table('audit_calendar_map')->insert(
+    ['fk_hol_id' => $holid,'fk_hol_map_id'=>$id]
+);
+             }
+              return response()->json([
+                    'status' => 200,
+                     'message' => 'Calendar updated successfully',
+        ]);
+}
 }
 
 

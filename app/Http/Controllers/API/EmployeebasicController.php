@@ -53,7 +53,7 @@ class EmployeebasicController extends Controller {
 
     public function viewlist() {
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as empid','audit_employee_basics.*','audit_designation.*')
+                ->select('audit_employee_basics.id as empid','audit_employee_basics.*','audit_designation.*','audit_department.*')
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                   ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                 ->get();

@@ -64,6 +64,7 @@ Route::get('/getHolidays',[HolidayController::class,'index']);
 Route::get('/getHolidayslist',[HolidayController::class,'holidaylist']);
 Route::delete('/delete_holidays/{id}',[HolidayController::class,'destroy']);
 Route::get('/edit_holidays/{id}',[HolidayController::class,'edit']);
+Route::get('/getRemainingholidays/{id}',[HolidayController::class,'getRemainingholidays']);
 Route::put('/update_holidays',[HolidayController::class,'update']);
 Route::post('/add_holidays_calendar',[HolidaycalendarController::class,'store']);
 Route::get('/getHolidaynames',[HolidaycalendarController::class,'getHolidaynames']);
@@ -80,6 +81,7 @@ Route::post('/add_audit_employees',[EmployeebasicController::class,'store']);
 Route::get('/getEmployeeDetails',[EmployeebasicController::class,'viewlist']);
 Route::get('/editfecthdepdata/{id}',[DepartmentController::class,'edit']);
 Route::put('/update_department',[DepartmentController::class,'update']);
+Route::put('/update_designation',[DesignationController::class,'update']);
 Route::delete('/delete_departments/{id}',[DepartmentController::class,'destroy']);
 Route::get('/editfecthdesdata/{id}',[DesignationController::class,'edit']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {

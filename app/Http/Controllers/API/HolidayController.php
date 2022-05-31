@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Holiday;
-
+use DB;
 class HolidayController extends Controller {
 
     public function store(Request $request) {
@@ -78,5 +78,12 @@ class HolidayController extends Controller {
                     'holiday' => $holidays,
         ]);
  }
-
+public function getRemainingholidays($id)
+{
+     $holidylist = DB::select("SELECT * FROM audit_holidays WHERE id NOT IN (SELECT fk_hol_id FROM audit_calendar_map where fk_hol_map_id=$id)");
+      return response()->json([
+                    'status' => 200,
+                    'holiday' => $holidylist,
+        ]);
+}
 }

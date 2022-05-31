@@ -23,6 +23,7 @@
             <file>file:/C:/xampp/htdocs/audit_portal/app/Department.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Holiday_Calander.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Designation.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_17_085344_create_audit_department_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/CandidateController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/JobController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Audit_Employee.php</file>

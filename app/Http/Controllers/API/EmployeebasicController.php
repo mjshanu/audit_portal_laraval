@@ -10,26 +10,23 @@ use DB;
 class EmployeebasicController extends Controller {
 
     public function store(Request $request) {
-         //return $request->all();
-       // return $request->file('profilepic');
-         if($request->hasFile('profilepic')){
-    $file=$request->file('profilepic');
-    $extension=$file->getClientOriginalExtension();
-    $filename= time().'.'.$extension;
-    $file->move('uploads/profile',$filename);
-    }
-    else {
-       
-        if($request->emp_gender=="male")
-        {
-            
-        $filename="men.png";
+        //return $request->all();
+        // return $request->file('profilepic');
+        if ($request->hasFile('profilepic')) {
+            $file = $request->file('profilepic');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/profile', $filename);
+        } else {
+
+            if ($request->emp_gender == "male") {
+
+                $filename = "men.png";
+            } else {
+                $filename = "default-women.png";
+            }
         }
-        else{
-             $filename="default-women.png"; 
-        } 
-    }
-       
+
         $employee = new EmployeeBasic;
         $employee->emp_name = $request->emp_name;
         $employee->emp_code = strtoupper($request->emp_code);
@@ -41,8 +38,8 @@ class EmployeebasicController extends Controller {
         $employee->emp_gender = $request->emp_gender;
         $employee->emp_holiday_calander = $request->emp_holiday_calender;
         $employee->emp_fk_dep = $request->emp_department;
-         $employee->emp_location = $request->emp_location;
-          $employee->image = $filename;
+        $employee->emp_location = $request->emp_location;
+        $employee->image = $filename;
         $employee->save();
         $lastId = $employee->id;
         DB::table('audit_employee_skillset')->insert(
@@ -53,14 +50,28 @@ class EmployeebasicController extends Controller {
                     'message' => 'employees added successfully',
         ]);
     }
-    public function viewlist()
-    {
+
+    public function viewlist() {
         $employees = DB::table('audit_employee_basics')
-    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
- 
-    ->get();
+                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                ->get();
         // $employees = EmployeeBasic::all();
-           return response()->json([
+        return response()->json([
+                    'status' => 200,
+                    'emp' => $employees,
+        ]);
+    }
+
+    public function GetEmployeeFullDetails($id) {
+        $employees = DB::table('audit_employee_basics')
+                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                ->where('audit_employee_basics.id', $id)
+                ->limit(1)
+                ->get();
+        // $employees = EmployeeBasic::all();
+        return response()->json([
                     'status' => 200,
                     'emp' => $employees,
         ]);

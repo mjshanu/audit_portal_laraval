@@ -95,6 +95,10 @@ class HolidaycalendarController extends Controller
                     'message' => "Deleted successfully",
         ]);
 }
+public function addtoExistingValue(Request $request)
+{
+    return $request->all();
+}
 }
 
 

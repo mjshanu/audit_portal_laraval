@@ -67,6 +67,7 @@ Route::get('/edit_holidays/{id}',[HolidayController::class,'edit']);
 Route::get('/getRemainingholidays/{id}',[HolidayController::class,'getRemainingholidays']);
 Route::put('/update_holidays',[HolidayController::class,'update']);
 Route::post('/add_holidays_calendar',[HolidaycalendarController::class,'store']);
+Route::post('/addtoExistingValue',[HolidaycalendarController::class,'addtoExistingValue']);
 Route::get('/getHolidaynames',[HolidaycalendarController::class,'getHolidaynames']);
 Route::get('/getholidysbyid/{id}',[HolidaycalendarController::class,'viewholidaysbyid']);
 Route::get('/getupdateholiday/{id}',[HolidaycalendarController::class,'optionalholidayupdate']);

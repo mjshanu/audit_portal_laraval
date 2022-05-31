@@ -97,7 +97,7 @@ class HolidaycalendarController extends Controller
 }
 public function addtoExistingValue(Request $request)
 {
-    return $request->all();
+   
       $hol_data= json_decode($request->holiday_name_drop);
        $id=$request->id;
          foreach($hol_data as $holidaydata) 

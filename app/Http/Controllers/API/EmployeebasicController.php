@@ -80,8 +80,8 @@ class EmployeebasicController extends Controller {
     }
     public function destroy($id)
     {
-         $organization= Organization::find($id);
-     $organization->delete();
+         $employee= EmployeeBasic::find($id);
+     $employee->delete();
      DB::table('audit_employee_skillset')->delete($id);
      return response()->json([
                     'status' => 200,

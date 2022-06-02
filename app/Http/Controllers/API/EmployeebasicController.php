@@ -78,5 +78,15 @@ class EmployeebasicController extends Controller {
                     'emp' => $employees,
         ]);
     }
+    public function destroy($id)
+    {
+         $organization= Organization::find($id);
+     $organization->delete();
+     DB::table('audit_employee_skillset')->delete($id);
+     return response()->json([
+                    'status' => 200,
+                    'message' => 'Employee Deleted successfully',
+        ]);
+    }
 
 }

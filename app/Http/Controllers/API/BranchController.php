@@ -62,6 +62,17 @@ class BranchController extends Controller {
                     'location' =>$location ,
         ]);
     }
+     public function locationdrop()
+    {
+         $location = DB::table('branches')
+                ->select('branch_location as label','branch_location as value')
+                ->get();
+     
+           return response()->json([
+                    'status' => 200,
+                    'location' =>$location ,
+        ]);
+    }
     public function destroy($id) {
     $branches= Branches::find($id);
      $branches->delete();

@@ -53,9 +53,9 @@ class EmployeebasicController extends Controller {
 
     public function viewlist() {
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as empid','audit_employee_basics.*','audit_designation.*','audit_department.*')
+                ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*')
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
-                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                 ->get();
         // $employees = EmployeeBasic::all();
         return response()->json([
@@ -68,7 +68,7 @@ class EmployeebasicController extends Controller {
         $employees = DB::table('audit_employee_basics')
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
-                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                 ->where('audit_employee_basics.id', $id)
                 ->limit(1)
                 ->get();
@@ -78,65 +78,137 @@ class EmployeebasicController extends Controller {
                     'emp' => $employees,
         ]);
     }
-    public function destroy($id)
-    {
-         $employee= EmployeeBasic::find($id);
-     $employee->delete();
-     DB::table('audit_employee_skillset')->delete($id);
-     return response()->json([
+
+    public function destroy($id) {
+        $employee = EmployeeBasic::find($id);
+        $employee->delete();
+        DB::table('audit_employee_skillset')->delete($id);
+        return response()->json([
                     'status' => 200,
                     'message' => 'Employee Deleted successfully',
         ]);
     }
-    public function getEmployeebylocation($id)
-    {
-       $getid=explode("&&",$id);
-      
-      $location=$getid[0];
-      $designation=$getid[1];
-      
-        if(($location!="" && $designation!=""))
-        {
+
+    public function getEmployeebylocation(Request $request) {
+
+        $hol_data = json_decode($request->emp_lo);
+        // echo '<pre>';print_r($hol_data);
+        // echo '<pre>';print_r($hol_data->location_items);
+        $location = $hol_data->location_items;
+
+        $designation = $hol_data->designation_items;
+        $loc_name = "";
+        $des_name = "";
+        foreach ($location as $locaitems) {
+
+            if ($locaitems->value != "*") {
+                $loc_name .= $locaitems->value . ',';
+            }
+        }
+        $locvar = 'Kochi,Hydarabad,Buwaneswar';
+        $loc_name1 = trim($loc_name, ",");
+        $varl = explode(',', $loc_name1);
+
+        foreach ($designation as $des) {
+            if ($des->value != "*") {
+                $des_name .= $des->value . ',';
+            }
+        }
+
+        $des_name1 = trim($des_name, ",");
+
+        if ($loc_name1 != "" && $des_name1 != "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
-                            ,'department_name','emp_joining_date','fk_emp_previous_exp','image') 
-                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
-                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
-                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
-                ->where('audit_employee_basics.emp_location', $location)
-                 ->where ('audit_employee_basics.emp_fk_des_id',$designation)
-                   -> distinct()
-                 ->get();   
-             
-               
-        }
-        else if(($location!="")&&( $designation==""))
-        {
-             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
-                            ,'department_name','emp_joining_date','fk_emp_previous_exp','image') 
-                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
-                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
-                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
-                ->where('audit_employee_basics.emp_location', $location)
-               ->distinct()
-                ->get();  
-        }
-        else {
-              $employees = DB::table('audit_employee_basics')
-                      ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
-                            ,'department_name','emp_joining_date','fk_emp_previous_exp','image') 
-                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
-                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
-                  ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
-                ->where ('audit_employee_basics.emp_fk_des_id',$designation)
-                -> distinct()
-                ->get();  
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                    ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                    ->distinct()
+                    ->get();
+        } elseif ($loc_name1 != "" && $des_name1 == "") {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                    ->distinct()
+                    ->get();
+        } elseif ($loc_name1 == "" && $des_name1 != "") {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                    ->distinct()
+                    ->get();
+        } else {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->distinct()
+                    ->get();
         }
         return response()->json([
                     'status' => 200,
-                   'emp' => $employees,
+                    'emp' => $employees,
         ]);
+        /*  $getid=explode("&&",$id);
+
+          $location=$getid[0];
+          $designation=$getid[1];
+
+          if(($location!="" && $designation!=""))
+          {
+          $employees = DB::table('audit_employee_basics')
+          ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
+          ,'department_name','emp_joining_date','fk_emp_previous_exp','image')
+          ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+          ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+          ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+          ->where('audit_employee_basics.emp_location', $location)
+          ->where ('audit_employee_basics.emp_fk_des_id',$designation)
+          -> distinct()
+          ->get();
+
+
+          }
+          else if(($location!="")&&( $designation==""))
+          {
+          $employees = DB::table('audit_employee_basics')
+          ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
+          ,'department_name','emp_joining_date','fk_emp_previous_exp','image')
+          ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+          ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+          ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+          ->where('audit_employee_basics.emp_location', $location)
+          ->distinct()
+          ->get();
+          }
+          else {
+          $employees = DB::table('audit_employee_basics')
+          ->select('audit_employee_basics.id as empid','emp_name','emp_code','designation_name','emp_company_email_id','emp_contact_number','emp_gender','emp_location'
+          ,'department_name','emp_joining_date','fk_emp_previous_exp','image')
+          ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+          ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+          ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+          ->where ('audit_employee_basics.emp_fk_des_id',$designation)
+          -> distinct()
+          ->get();
+          }
+          return response()->json([
+          'status' => 200,
+          'emp' => $employees,
+          ]); */
     }
 
 }

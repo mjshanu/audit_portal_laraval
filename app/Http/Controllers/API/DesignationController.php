@@ -25,7 +25,7 @@ class DesignationController extends Controller
     }
     public function index()
     {
-         $designation = Designation::all('id', 'designation_name');
+         $designation = Designation::all('id as value', 'designation_name as label');
           return response()->json([
                     'status' => 200,
                     'designation' => $designation,

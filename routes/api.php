@@ -50,6 +50,7 @@ Route::delete('/delete_organization/{id}',[OrganizationController::class,'destro
 Route::get('/deleteCandidate/{id}',[CandidateController::class,'deleteCandidate']);
 Route::post('/add_branches',[BranchController::class,'store']);
 Route::get('/getLocationBranch',[BranchController::class,'location']);
+Route::get('/getLocationBranchDrop',[BranchController::class,'locationdrop']);
 Route::get('/editfecthbranchdata/{id}',[BranchController::class,'edit']);
 Route::put('/update_branch',[BranchController::class,'update']);
 Route::delete('/delete_branches/{id}',[BranchController::class,'destroy']);
@@ -86,7 +87,7 @@ Route::put('/update_designation',[DesignationController::class,'update']);
 Route::delete('/delete_departments/{id}',[DepartmentController::class,'destroy']);
 Route::get('/editfecthdesdata/{id}',[DesignationController::class,'edit']);
 Route::get('/GetEmployeeFullDetails/{id}',[EmployeebasicController::class,'GetEmployeeFullDetails']);
-Route::get('/getEmployeebylocation/{id}',[EmployeebasicController::class,'getEmployeebylocation']);
+Route::post('/getEmployeebylocation',[EmployeebasicController::class,'getEmployeebylocation']);
 Route::delete('/delete_Employee/{id}',[EmployeebasicController::class,'destroy']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

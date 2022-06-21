@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\EmployeeBasic;
 use DB;
-
+use DateTime;
 class EmployeebasicController extends Controller {
 
     public function store(Request $request) {
@@ -58,6 +58,28 @@ class EmployeebasicController extends Controller {
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                 ->get();
         // $employees = EmployeeBasic::all();
+         $i=0;
+       foreach($employees as $emp)
+       {
+       
+           $joingdate = new DateTime($emp->emp_joining_date);
+           $today     = new DateTime();
+           $interval  = $today->diff($joingdate);
+           //$totatlexp=$interval->format('%y years and %m months');
+           $year=$interval->format("%y");
+           if( $year==0)
+           {
+             $totatlexp= $interval->format('%m months');
+           }
+           else 
+           {
+                $totatlexp= $interval->format('%y years');
+           }
+           $employees[$i]->exp=$totatlexp;
+            $i++;
+       }
+      
+      // echo '<pre>';print_r($employees);exit;
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,
@@ -72,8 +94,9 @@ class EmployeebasicController extends Controller {
                 ->where('audit_employee_basics.id', $id)
                 ->limit(1)
                 ->get();
+       
         // $employees = EmployeeBasic::all();
-        return response()->json([
+       return response()->json([
                     'status' => 200,
                     'emp' => $employees,
         ]);
@@ -158,6 +181,27 @@ class EmployeebasicController extends Controller {
                     ->distinct()
                     ->get();
         }
+          $i=0;
+       foreach($employees as $emp)
+       {
+       
+          $joingdate = new DateTime($emp->emp_joining_date);
+           $today     = new DateTime();
+           $interval  = $today->diff($joingdate);
+           //$totatlexp=$interval->format('%y years and %m months');
+           $year=$interval->format("%y");
+           if( $year==0)
+           {
+             $totatlexp= $interval->format('%m months');
+           }
+           else 
+           {
+                $totatlexp= $interval->format('%y years');
+           }
+           $employees[$i]->exp=$totatlexp;
+            $i++;
+       }
+      
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,

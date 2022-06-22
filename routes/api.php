@@ -11,6 +11,8 @@ use App\Http\Controllers\API\HolidaycalendarController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\API\EmployeebasicController;
+use App\Http\Controllers\API\PersonalInformationController;
+use App\Http\Controllers\API\PersonalEducationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -89,6 +91,8 @@ Route::get('/editfecthdesdata/{id}',[DesignationController::class,'edit']);
 Route::get('/GetEmployeeFullDetails/{id}',[EmployeebasicController::class,'GetEmployeeFullDetails']);
 Route::post('/getEmployeebylocation',[EmployeebasicController::class,'getEmployeebylocation']);
 Route::delete('/delete_Employee/{id}',[EmployeebasicController::class,'destroy']);
+Route::post('/add_personalinformation',[PersonalInformationController::class,'store']);
+Route::post('/add_employeeeducation',[PersonalEducationController::class,'store']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

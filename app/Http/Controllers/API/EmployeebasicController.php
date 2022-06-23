@@ -91,9 +91,11 @@ class EmployeebasicController extends Controller {
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                  ->leftJoin('audit_personalinformation', 'audit_designation.id', '=', 'audit_personalinformation.p_fk_emp_id')
+                ->leftJoin('audit_personal_education', 'audit_designation.id', '=', 'audit_personal_education.ed_fk_emp_id')
                 ->where('audit_employee_basics.id', $id)
                 ->limit(1)
-                ->get();
+                ->toSQL();
        
         // $employees = EmployeeBasic::all();
        return response()->json([

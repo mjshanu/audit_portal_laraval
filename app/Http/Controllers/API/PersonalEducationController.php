@@ -4,13 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\PersonalInformation;
+use App\EmployeeEducation;
 
 class PersonalEducationController extends Controller {
 
     public function store(Request $request) {
         //   return $request->all();
-        $pe = new PersonalInformation;
+        $pe = new EmployeeEducation;
         $pe->ed_fk_emp_id = $request->cmid;
         $pe->education_name = $request->employee_education;
         $pe->institution = $request->employee_institution;

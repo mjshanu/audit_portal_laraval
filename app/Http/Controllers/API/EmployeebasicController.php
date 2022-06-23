@@ -95,7 +95,7 @@ class EmployeebasicController extends Controller {
                 ->leftJoin('audit_personal_education', 'audit_designation.id', '=', 'audit_personal_education.ed_fk_emp_id')
                 ->where('audit_employee_basics.id', $id)
                 ->limit(1)
-                ->toSQL();
+                ->get();
        
         // $employees = EmployeeBasic::all();
        return response()->json([

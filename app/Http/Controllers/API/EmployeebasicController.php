@@ -56,6 +56,7 @@ class EmployeebasicController extends Controller {
                 ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*')
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                ->orderBy('emp_code','ASC')
                 ->get();
         // $employees = EmployeeBasic::all();
          $i=0;
@@ -115,15 +116,20 @@ class EmployeebasicController extends Controller {
     }
 
     public function getEmployeebylocation(Request $request) {
-
+     
         $hol_data = json_decode($request->emp_lo);
         // echo '<pre>';print_r($hol_data);
-        // echo '<pre>';print_r($hol_data->location_items);
+        //echo '<pre>';print_r($hol_data->skillset_items);
         $location = $hol_data->location_items;
-
+       $skills=   $hol_data->skillset_items;
+      
         $designation = $hol_data->designation_items;
+        
         $loc_name = "";
         $des_name = "";
+        $skill_name=[];
+        $skill_name1="";
+        $skill_namez="";
         foreach ($location as $locaitems) {
 
             if ($locaitems->value != "*") {
@@ -141,8 +147,18 @@ class EmployeebasicController extends Controller {
         }
 
         $des_name1 = trim($des_name, ",");
-
-        if ($loc_name1 != "" && $des_name1 != "") {
+        foreach ($skills as $skil) {
+            if ($skil->value != "*") {
+                 $skill_namez.= $skil->value . ',';
+                $skill_name[] = $skil->value;
+            }
+        }
+         $skill_name1 = trim($skill_namez, ",");
+        
+       // echo '<pre>';print_r($skill_name);
+         
+       
+        if ($loc_name1 != "" && $des_name1 != ""  && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
                             , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
@@ -151,9 +167,50 @@ class EmployeebasicController extends Controller {
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                    ->where('primary_skill', 'regexp', '(' .  implode("|", $skill_name) .')')
+                      ->orderBy('emp_code','ASC')
                     ->distinct()
                     ->get();
-        } elseif ($loc_name1 != "" && $des_name1 == "") {
+        }
+         elseif ($loc_name1 != "" && $des_name1 != "" && $skill_name1 == "") {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                   ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                    ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                      ->orderBy('emp_code','ASC')
+                    ->distinct()
+                    ->get();
+        } 
+        elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 != "") {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                   ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                   ->where('primary_skill', 'regexp', '(' .  implode("|", $skill_name) .')')
+                    ->distinct()
+                    ->get();
+        } 
+        elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 != "") {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                   ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                   ->where('primary_skill', 'regexp', '(' .  implode("|", $skill_name) .')')
+                      ->orderBy('emp_code','ASC')
+                    ->distinct()
+                    ->get();
+        } 
+        elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
                             , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
@@ -161,9 +218,10 @@ class EmployeebasicController extends Controller {
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                      ->orderBy('emp_code','ASC')
                     ->distinct()
                     ->get();
-        } elseif ($loc_name1 == "" && $des_name1 != "") {
+        } elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
                             , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
@@ -171,15 +229,31 @@ class EmployeebasicController extends Controller {
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                      ->orderBy('emp_code','ASC')
                     ->distinct()
                     ->get();
-        } else {
+        } 
+        elseif ($loc_name1 == "" && $des_name1 == "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
                             , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->where('primary_skill', 'regexp', '(' .  implode("|", $skill_name) .')')
+                      ->orderBy('emp_code','ASC')
+                    ->distinct()
+                    ->get();
+        } 
+        
+        else {
+            $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                      ->orderBy('emp_code','ASC')
                     ->distinct()
                     ->get();
         }
@@ -256,5 +330,24 @@ class EmployeebasicController extends Controller {
           'emp' => $employees,
           ]); */
     }
+     public function searchbyButton($id)
+     {
+         $employees = DB::table('audit_employee_basics')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                    ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                    ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                    ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->where('emp_name','like',"%{$id}%")
+                    ->orWhere('emp_code','like',"%{$id}%")
+                      ->orderBy('emp_code','ASC')
+                    ->distinct()
+                    ->get();
+                    
+                    return response()->json([
+                    'status' => 200,
+                    'emp' => $employees,
+        ]);
+     }
 
 }

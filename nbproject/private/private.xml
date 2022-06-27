@@ -4,43 +4,55 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Job.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/DepartmentController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Skillset.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_05_070731_create_audit_holidays_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_20_082624_create_audit_employee_head_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/BranchController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_06_22_110308_create_audit_personal_education_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/routes/api.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_19_092642_create_organization_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_20_084154_create_audit_employee_designation_log_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_05_073220_create_audit_holidays_calendar_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/Audit_EmployeeController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_02_15_075539_create_audit_employee_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/resources/views/email/AuditMail.blade.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/HolidayController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_20_071246_create_audit_employee_basics_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_071521_create_branches_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Branches.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Department.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_06_22_062852_create_skills_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/Controller.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Holiday_Calander.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Designation.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_17_085344_create_audit_department_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/CandidateController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/JobController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Audit_Employee.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_17_111850_create_audit_designation_table.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeebasicController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/.env</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_121908_create_job_post_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_23_104930_create_audit_employee_skillset_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_06_22_085417_create_audit_personalinformation_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2019_08_19_000000_create_failed_jobs_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/OrganizationController.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController_1.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_05_073638_create_audit_calendar_map_table.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/HolidaycalendarController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/EmployeeBasic.php</file>
-            <file>file:/C:/xampp/htdocs/audit_portal/.git/config</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Mail/AuditMail.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/EmployeeEducation.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/SkillController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/DepartmentController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_20_082624_create_audit_employee_head_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/BranchController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_12_02_071548_create_job_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/SkillsetController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_20_084154_create_audit_employee_designation_log_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/Audit_EmployeeController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/PersonalInformationController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/PersonalEducationController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/HolidayController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_071521_create_branches_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Department.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/PersonalInformation.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_17_111850_create_audit_designation_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeebasicController.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2021_11_30_121908_create_job_post_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/EmployeeController_1.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/database/migrations/2022_05_05_073638_create_audit_calendar_map_table.php</file>
+            <file>file:/C:/xampp/htdocs/audit_portal/.git/config</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Http/Controllers/API/DesignationController.php</file>
             <file>file:/C:/xampp/htdocs/audit_portal/app/Holiday.php</file>
         </group>

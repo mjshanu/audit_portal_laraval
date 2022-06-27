@@ -13,6 +13,7 @@ use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\API\EmployeebasicController;
 use App\Http\Controllers\API\PersonalInformationController;
 use App\Http\Controllers\API\PersonalEducationController;
+use App\Http\Controllers\API\SkillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -93,6 +94,8 @@ Route::post('/getEmployeebylocation',[EmployeebasicController::class,'getEmploye
 Route::delete('/delete_Employee/{id}',[EmployeebasicController::class,'destroy']);
 Route::post('/add_personalinformation',[PersonalInformationController::class,'store']);
 Route::post('/add_employeeeducation',[PersonalEducationController::class,'store']);
+Route::get('/getskillset',[SkillController::class,'index']);
+Route::get('/searchbyButton/{id}',[EmployeebasicController::class,'searchbyButton']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

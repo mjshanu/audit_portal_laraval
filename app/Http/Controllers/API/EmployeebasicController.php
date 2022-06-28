@@ -70,17 +70,36 @@ class EmployeebasicController extends Controller {
            $year=$interval->format("%y");
            if( $year==0)
            {
-             $totatlexp= $interval->format('%m months');
+             $btotatlexp= $interval->format('%m months');
+              $badge="gray";
+             
+             $otalexp=$interval->format('%m')+$emp->fk_emp_previous_exp;
            }
            else 
            {
-                $totatlexp= $interval->format('%y years');
+                $btotatlexp= $interval->format('%y years');
+                $otalexp= $interval->format('%y')+$emp->fk_emp_previous_exp;
+                 if($btotatlexp<5)
+      {
+          $badge="gray";
+      }
+      elseif($btotatlexp>=5 && $btotatlexp<10)
+      {
+          $badge="silver";
+      }
+      else {
+          $badge="gold"; 
+      }
            }
-           $employees[$i]->exp=$totatlexp;
+          
+            
+       $employees[$i]->bourntecexp= $btotatlexp;
+             $employees[$i]->exp=$otalexp;
+             $employees[$i]->badge=$badge;
             $i++;
        }
       
-      // echo '<pre>';print_r($employees);exit;
+      
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,

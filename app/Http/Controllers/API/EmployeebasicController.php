@@ -53,9 +53,10 @@ class EmployeebasicController extends Controller {
 
     public function viewlist() {
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*')
+                ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*','audit_employee_skillset.primary_skill as primary_skill')
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                 ->orderBy('emp_code','ASC')
                 ->get();
         // $employees = EmployeeBasic::all();
@@ -180,7 +181,7 @@ class EmployeebasicController extends Controller {
         if ($loc_name1 != "" && $des_name1 != ""  && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -194,7 +195,7 @@ class EmployeebasicController extends Controller {
          elseif ($loc_name1 != "" && $des_name1 != "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -207,7 +208,7 @@ class EmployeebasicController extends Controller {
         elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -219,7 +220,7 @@ class EmployeebasicController extends Controller {
         elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -232,7 +233,7 @@ class EmployeebasicController extends Controller {
         elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -243,7 +244,7 @@ class EmployeebasicController extends Controller {
         } elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -255,7 +256,7 @@ class EmployeebasicController extends Controller {
         elseif ($loc_name1 == "" && $des_name1 == "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -268,7 +269,7 @@ class EmployeebasicController extends Controller {
         else {
             $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -285,15 +286,34 @@ class EmployeebasicController extends Controller {
            $interval  = $today->diff($joingdate);
            //$totatlexp=$interval->format('%y years and %m months');
            $year=$interval->format("%y");
-           if( $year==0)
+         if( $year==0)
            {
-             $totatlexp= $interval->format('%m months');
+             $btotatlexp= $interval->format('%m months');
+              $badge="gray";
+             
+             $otalexp=$interval->format('%m')+$emp->fk_emp_previous_exp;
            }
            else 
            {
-                $totatlexp= $interval->format('%y years');
+                $btotatlexp= $interval->format('%y years');
+                $otalexp= $interval->format('%y')+$emp->fk_emp_previous_exp;
+                 if($btotatlexp<5)
+      {
+          $badge="gray";
+      }
+      elseif($btotatlexp>=5 && $btotatlexp<10)
+      {
+          $badge="silver";
+      }
+      else {
+          $badge="gold"; 
+      }
            }
-           $employees[$i]->exp=$totatlexp;
+          
+            
+       $employees[$i]->bourntecexp= $btotatlexp;
+             $employees[$i]->exp=$otalexp;
+             $employees[$i]->badge=$badge;
             $i++;
        }
       
@@ -353,7 +373,7 @@ class EmployeebasicController extends Controller {
      {
          $employees = DB::table('audit_employee_basics')
                     ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image')
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image','primary_skill')
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
@@ -362,7 +382,45 @@ class EmployeebasicController extends Controller {
                       ->orderBy('emp_code','ASC')
                     ->distinct()
                     ->get();
-                    
+                     $i=0;
+       foreach($employees as $emp)
+       {
+       
+          $joingdate = new DateTime($emp->emp_joining_date);
+           $today     = new DateTime();
+           $interval  = $today->diff($joingdate);
+           //$totatlexp=$interval->format('%y years and %m months');
+           $year=$interval->format("%y");
+         if( $year==0)
+           {
+             $btotatlexp= $interval->format('%m months');
+              $badge="gray";
+             
+             $otalexp=$interval->format('%m')+$emp->fk_emp_previous_exp;
+           }
+           else 
+           {
+                $btotatlexp= $interval->format('%y years');
+                $otalexp= $interval->format('%y')+$emp->fk_emp_previous_exp;
+                 if($btotatlexp<5)
+      {
+          $badge="gray";
+      }
+      elseif($btotatlexp>=5 && $btotatlexp<10)
+      {
+          $badge="silver";
+      }
+      else {
+          $badge="gold"; 
+      }
+           }
+          
+            
+       $employees[$i]->bourntecexp= $btotatlexp;
+             $employees[$i]->exp=$otalexp;
+             $employees[$i]->badge=$badge;
+            $i++;
+       }
                     return response()->json([
                     'status' => 200,
                     'emp' => $employees,

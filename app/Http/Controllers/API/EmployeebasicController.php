@@ -426,5 +426,5 @@ class EmployeebasicController extends Controller {
                     'emp' => $employees,
         ]);
      }
-
+    
 }

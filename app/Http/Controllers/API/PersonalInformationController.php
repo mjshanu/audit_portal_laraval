@@ -21,11 +21,14 @@ class PersonalInformationController extends Controller {
         $pi->p_email_adress = $request->personal_email_id;
         $pi->tot_exp = $request->total_experience;
         $pi->m_status = $request->marital_status;
-         $pi->save();
+        $pi->save();
         return response()->json([
                     'status' => 200,
                     'message' => 'Personal Information added successfully',
         ]);
     }
+
+    
+    
 
 }

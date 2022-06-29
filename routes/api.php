@@ -14,6 +14,7 @@ use App\Http\Controllers\API\EmployeebasicController;
 use App\Http\Controllers\API\PersonalInformationController;
 use App\Http\Controllers\API\PersonalEducationController;
 use App\Http\Controllers\API\SkillController;
+use App\Http\Controllers\API\EmployeeSkillsetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -96,6 +97,8 @@ Route::post('/add_personalinformation',[PersonalInformationController::class,'st
 Route::post('/add_employeeeducation',[PersonalEducationController::class,'store']);
 Route::get('/getskillset',[SkillController::class,'index']);
 Route::get('/searchbyButton/{id}',[EmployeebasicController::class,'searchbyButton']);
+Route::put('/update_profileeducation',[PersonalEducationController::class,'update_profileeducation']);
+Route::put('/update_profileskills',[EmployeeSkillsetController::class,'update_profileskills']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

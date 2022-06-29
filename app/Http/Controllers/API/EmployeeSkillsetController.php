@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Employee_Skillset;
 class EmployeeSkillsetController extends Controller
 {
-    public function update_profileeducation(Request $request) {
+    public function update_profileskills(Request $request) {
         $id = $request->fk_emp_id;
         // $employee= PersonalInformation::find($id);
         $employee = Employee_Skillset::where('fk_emp_id', '=', $id)->first();

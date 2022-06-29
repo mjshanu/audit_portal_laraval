@@ -25,7 +25,7 @@ class PersonalEducationController extends Controller {
 public function update_profileeducation(Request $request) {
         $id = $request->ed_fk_emp_id;
         // $employee= PersonalInformation::find($id);
-        $employee = PersonalInformation::where('ed_fk_emp_id', '=', $id)->first();
+        $employee = EmployeeEducation::where('ed_fk_emp_id', '=', $id)->first();
         $employee->education_name = $request->education_name;
         $employee->institution = $request->institution;
         $employee->year_of_pass = $request->year_of_pass;

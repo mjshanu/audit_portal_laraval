@@ -11,7 +11,7 @@ class PersonalInformationController extends Controller {
     public function store(Request $request) {
         //return $request->all();
         $pi = new PersonalInformation;
-        $pi->p_fk_emp_id = $request->emid;
+        $pi->p_fk_emp_id = $request->p_fk_emp_id;
         $pi->aadhar_number = $request->adhaar_no;
         $pi->permenent_adress = $request->Perm_address;
         $pi->f_m_s_name = $request->parent_name;

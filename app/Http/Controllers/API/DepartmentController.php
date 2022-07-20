@@ -1,4 +1,4 @@
-<?php
+';,,]]<?php
 
 namespace App\Http\Controllers\API;
 
@@ -30,7 +30,7 @@ class DepartmentController extends Controller
      public function departmentname()
      {
           $department=Department::distinct()->get(['department_name','id']);
-    
+        
     return response()->json([
                     'status' => 200,
                     'department' => $department,

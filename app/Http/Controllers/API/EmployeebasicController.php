@@ -53,6 +53,7 @@ class EmployeebasicController extends Controller {
     }
 
     public function viewlist() {
+          $employee = new EmployeeBasic;
         $employees = DB::table('audit_employee_basics')
                 ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*', 'audit_employee_skillset.primary_skill as primary_skill','audit_employee_notice.id as notice_id','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
@@ -61,7 +62,16 @@ class EmployeebasicController extends Controller {
                ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                 ->orderBy('emp_code', 'ASC')
                 ->get();
+        
         // $employees = EmployeeBasic::all();
+     //   $activecount=EmployeeBasic::where('status', 'active')->count();
+        $empcount = $employees->count();
+$active = $employees->where('status', '=', 'active')->count();
+$noticecount = $employees->where('status', '=', 'notice')->count();
+$inactivecount = $employees->where('status', '=', 'inactive')->count();
+//$employees->countactive=10;
+
+
         $i = 0;
         foreach ($employees as $emp) {
            
@@ -98,6 +108,9 @@ class EmployeebasicController extends Controller {
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,
+                    'countactive'=>$active,
+                   'countnotice'=>$noticecount,
+                   'inactivecount'=>$inactivecount
         ]);
     }
 

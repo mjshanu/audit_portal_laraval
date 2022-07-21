@@ -14,6 +14,11 @@ use App\Http\Controllers\API\EmployeebasicController;
 use App\Http\Controllers\API\PersonalInformationController;
 use App\Http\Controllers\API\PersonalEducationController;
 use App\Http\Controllers\API\SkillController;
+use App\Http\Controllers\API\EmployeeSkillsetController;
+use App\Http\Controllers\API\StreamController;
+use App\Http\Controllers\API\SubstreamController;
+use App\Http\Controllers\API\StreammappingController;
+use App\Http\Controllers\API\NoticeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -96,6 +101,16 @@ Route::post('/add_personalinformation',[PersonalInformationController::class,'st
 Route::post('/add_employeeeducation',[PersonalEducationController::class,'store']);
 Route::get('/getskillset',[SkillController::class,'index']);
 Route::get('/searchbyButton/{id}',[EmployeebasicController::class,'searchbyButton']);
+Route::put('/update_profileeducation',[PersonalEducationController::class,'update_profileeducation']);
+Route::put('/update_profileskills',[EmployeeSkillsetController::class,'update_profileskills']);
+Route::post('/add_stream',[StreamController::class,'store']);
+Route::get('/getStreamName',[StreamController::class,'index']);
+Route::post('/add_substream',[SubstreamController::class,'store']);
+Route::get('/getStreamValues',[StreamController::class,'getstreamsubValue']);
+Route::get('/getSubstreamname/{id}',[SubstreamController::class,'getSubstreamname']);
+Route::get('/getAllemployeesub/{id}',[EmployeebasicController::class,'getAllemployeesub']);
+Route::post('/add_map_stream',[StreammappingController::class,'add_map_stream']);
+Route::post('/add_notice',[NoticeController::class,'store']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

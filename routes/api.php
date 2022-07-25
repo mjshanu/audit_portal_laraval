@@ -19,6 +19,7 @@ use App\Http\Controllers\API\StreamController;
 use App\Http\Controllers\API\SubstreamController;
 use App\Http\Controllers\API\StreammappingController;
 use App\Http\Controllers\API\NoticeController;
+use App\Http\Controllers\API\RevokeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -111,6 +112,8 @@ Route::get('/getSubstreamname/{id}',[SubstreamController::class,'getSubstreamnam
 Route::get('/getAllemployeesub/{id}',[EmployeebasicController::class,'getAllemployeesub']);
 Route::post('/add_map_stream',[StreammappingController::class,'add_map_stream']);
 Route::post('/add_notice',[NoticeController::class,'store']);
+Route::post('/lastworking_day',[NoticeController::class,'lastworking_day']);
+Route::post('/revokereason',[RevokeController::class,'store']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

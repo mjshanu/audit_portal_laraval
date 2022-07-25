@@ -29,5 +29,20 @@ class NoticeController extends Controller {
                     'message' => 'Resign added successfully',
         ]);
     }
+    public function lastworking_day(Request $request)
+    {
+        
+       AuditEmployeeNotice::where('fk_employee_id',$request->emp_id)->update( array('last_working'=>$request->last_working_day)); 
+        DB::table('audit_employee_basics')
+->where('id', $request->emp_id)
+->update(['status'=>'inactive']);
+        DB::table('audit_employee_noticelog')->insert(
+    ['fk_n_employee_id' => $request->emp_id, 'activity_name' => 'Last working Day','byname'=>'admin']
+);
+        return response()->json([
+                    'status' => 200,
+                    'message' => 'last added successfully',
+        ]);
+    }
 
 }

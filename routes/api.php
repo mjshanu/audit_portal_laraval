@@ -102,6 +102,7 @@ Route::post('/add_personalinformation',[PersonalInformationController::class,'st
 Route::post('/add_employeeeducation',[PersonalEducationController::class,'store']);
 Route::get('/getskillset',[SkillController::class,'index']);
 Route::get('/searchbyButton/{id}',[EmployeebasicController::class,'searchbyButton']);
+Route::get('/searchbycount/{id}',[EmployeebasicController::class,'searchbycount']);
 Route::put('/update_profileeducation',[PersonalEducationController::class,'update_profileeducation']);
 Route::put('/update_profileskills',[EmployeeSkillsetController::class,'update_profileskills']);
 Route::post('/add_stream',[StreamController::class,'store']);

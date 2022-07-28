@@ -188,11 +188,12 @@ class EmployeebasicController extends Controller {
 
         if ($loc_name1 != "" && $des_name1 != "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
@@ -202,11 +203,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 != "" && $des_name1 != "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                      ->where('status', '!=', 'inactive')
@@ -215,11 +217,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                    ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
                       ->where('status', '!=', 'inactive')
@@ -227,11 +230,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                     ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
                       ->where('status', '!=', 'inactive')
@@ -240,11 +244,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 != "" && $des_name1 == "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                     ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                       ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
@@ -252,11 +257,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 == "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                      ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                       ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
@@ -264,11 +270,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } elseif ($loc_name1 == "" && $des_name1 == "" && $skill_name1 != "") {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                     ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
                       ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
@@ -276,11 +283,12 @@ class EmployeebasicController extends Controller {
                     ->get();
         } else {
             $employees = DB::table('audit_employee_basics')
-                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                    ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                            , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                     ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                      ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
@@ -373,11 +381,12 @@ class EmployeebasicController extends Controller {
 
     public function searchbyButton($id) {
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location','audit_employee_basics.status as status'
+                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                 ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                   ->where('status', '!=', 'inactive')
                 ->where('emp_name', 'like', "%{$id}%")
                 ->orWhere('emp_code', 'like', "%{$id}%")
@@ -427,18 +436,20 @@ class EmployeebasicController extends Controller {
     }
 
     public function searchbycount($id) {
-        // return $id;
-        $employees = DB::table('audit_employee_basics')
+       
+       
+        if($id=='notice')
+        {
+             $employees = DB::table('audit_employee_basics')
                 ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
-                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_basics.status as status','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                 ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                 ->where('status', '=', "$id")
                 ->distinct()
                 ->get();
-        if($id=='notice')
-        {
              $noticecount = $employees->count();
             $active=0;
             $inactivecount=0;
@@ -446,12 +457,32 @@ class EmployeebasicController extends Controller {
         }
         elseif($id=='active')
         {
+            $employees = DB::table('audit_employee_basics')
+                ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_basics.status as status','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
+                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                 ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
+                ->where('status', '!=', "inactive")
+                ->distinct()
+                ->get();
              $active = $employees->count();
              $noticecount=0;
              $inactivecount=0;
              
         }
         else {
+             $employees = DB::table('audit_employee_basics')
+                ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill','audit_employee_basics.status as status','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
+                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                 ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
+                ->where('status', '=', "$id")
+                ->distinct()
+                ->get();
             $inactivecount = $employees->count();
             $active = 0;
              $noticecount=0;

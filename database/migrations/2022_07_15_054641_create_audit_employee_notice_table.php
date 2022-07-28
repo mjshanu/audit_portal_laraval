@@ -21,6 +21,7 @@ class CreateAuditEmployeeNoticeTable extends Migration {
             $table->foreignId('fk_employee_id')->references('id')->on('audit_employee_basics');
             $table->enum('nstatus', [0, 1])->default(1);
             $table->integer('fk_map_id');
+             $table->date('last_working')->nullable();;
             $table->timestamps();
         });
     }

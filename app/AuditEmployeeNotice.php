@@ -13,6 +13,7 @@ class AuditEmployeeNotice extends Model
       'frequency',
       'date_of_releave',
       'nstatus',
-      'fk_map_id'   
+      'fk_map_id',
+       'last_working'  
          ]; 
 }

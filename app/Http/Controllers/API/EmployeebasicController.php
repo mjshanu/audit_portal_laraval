@@ -53,28 +53,29 @@ class EmployeebasicController extends Controller {
     }
 
     public function viewlist() {
-          $employee = new EmployeeBasic;
+        $employee = new EmployeeBasic;
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*', 'audit_employee_skillset.primary_skill as primary_skill','audit_employee_notice.id as notice_id','audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
+                ->select('audit_employee_basics.id as empid', 'audit_employee_basics.*', 'audit_designation.*', 'audit_department.*', 'audit_employee_skillset.primary_skill as primary_skill', 'audit_employee_notice.id as notice_id', 'audit_employee_notice.date_of_resign as date_of_resign', DB::raw("DATEDIFF(date_of_releave,date_of_resign)AS Days"))
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
-               ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
+                ->leftJoin('audit_employee_notice', 'audit_employee_notice.fk_employee_id', '=', 'audit_employee_basics.id')
                 ->orderBy('emp_code', 'ASC')
+                ->where('status', '!=', 'inactive')
                 ->get();
-        
+
         // $employees = EmployeeBasic::all();
-     //   $activecount=EmployeeBasic::where('status', 'active')->count();
+        //   $activecount=EmployeeBasic::where('status', 'active')->count();
         $empcount = $employees->count();
-$active = $employees->where('status', '=', 'active')->count();
-$noticecount = $employees->where('status', '=', 'notice')->count();
-$inactivecount = $employees->where('status', '=', 'inactive')->count();
+        $active = \DB::table('audit_employee_basics')->where('status', '=', 'active')->count();
+        $noticecount = \DB::table('audit_employee_basics')->where('status', '=', 'notice')->count();
+        $inactivecount = \DB::table('audit_employee_basics')->where('status', '=', 'inactive')->count();
 //$employees->countactive=10;
 
 
         $i = 0;
         foreach ($employees as $emp) {
-           
+
             $joingdate = new DateTime($emp->emp_joining_date);
             $today = new DateTime();
             $interval = $today->diff($joingdate);
@@ -108,9 +109,9 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,
-                    'countactive'=>$active,
-                   'countnotice'=>$noticecount,
-                   'inactivecount'=>$inactivecount
+                    'countactive' => $active,
+                    'countnotice' => $noticecount,
+                    'inactivecount' => $inactivecount
         ]);
     }
 
@@ -195,6 +196,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
+                     ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -207,6 +209,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                     ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -219,6 +222,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
+                      ->where('status', '!=', 'inactive')
                     ->distinct()
                     ->get();
         } elseif ($loc_name1 == "" && $des_name1 != "" && $skill_name1 != "") {
@@ -230,6 +234,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
+                      ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -241,6 +246,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_location', explode(',', $loc_name1))
+                      ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -252,6 +258,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->whereIn('audit_employee_basics.emp_fk_des_id', explode(',', $des_name1))
+                      ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -263,6 +270,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
                     ->where('primary_skill', 'regexp', '(' . implode("|", $skill_name) . ')')
+                      ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -273,6 +281,7 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                     ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                     ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                     ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                     ->where('status', '!=', 'inactive')
                     ->orderBy('emp_code', 'ASC')
                     ->distinct()
                     ->get();
@@ -369,11 +378,16 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
                 ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
                 ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
                 ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                  ->where('status', '!=', 'inactive')
                 ->where('emp_name', 'like', "%{$id}%")
                 ->orWhere('emp_code', 'like', "%{$id}%")
                 ->orderBy('emp_code', 'ASC')
                 ->distinct()
                 ->get();
+        $empcount = $employees->count();
+        $active = $employees->where('status', '=', 'active')->count();
+        $noticecount = $employees->where('status', '=', 'notice')->count();
+        $inactivecount = $employees->where('status', '=', 'inactive')->count();
         $i = 0;
         foreach ($employees as $emp) {
 
@@ -408,35 +422,103 @@ $inactivecount = $employees->where('status', '=', 'inactive')->count();
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,
+                   
+        ]);
+    }
+
+    public function searchbycount($id) {
+        // return $id;
+        $employees = DB::table('audit_employee_basics')
+                ->select('audit_employee_basics.id as empid', 'emp_name', 'emp_code', 'designation_name', 'emp_company_email_id', 'emp_contact_number', 'emp_gender', 'emp_location'
+                        , 'department_name', 'emp_joining_date', 'fk_emp_previous_exp', 'image', 'primary_skill')
+                ->join('audit_department', 'audit_employee_basics.emp_fk_dep', '=', 'audit_department.id')
+                ->join('audit_employee_skillset', 'audit_employee_skillset.fk_emp_id', '=', 'audit_employee_basics.id')
+                ->join('audit_designation', 'audit_designation.id', '=', 'audit_employee_basics.emp_fk_des_id')
+                ->where('status', '=', "$id")
+                ->distinct()
+                ->get();
+        if($id=='notice')
+        {
+             $noticecount = $employees->count();
+            $active=0;
+            $inactivecount=0;
+             
+        }
+        elseif($id=='active')
+        {
+             $active = $employees->count();
+             $noticecount=0;
+             $inactivecount=0;
+             
+        }
+        else {
+            $inactivecount = $employees->count();
+            $active = 0;
+             $noticecount=0;
+        }
+       
+        $i = 0;
+        foreach ($employees as $emp) {
+
+            $joingdate = new DateTime($emp->emp_joining_date);
+            $today = new DateTime();
+            $interval = $today->diff($joingdate);
+            //$totatlexp=$interval->format('%y years and %m months');
+            $year = $interval->format("%y");
+            if ($year == 0) {
+                $btotatlexp = $interval->format('%m months');
+                $badge = "gray";
+
+                $otalexp = $interval->format('%m') + $emp->fk_emp_previous_exp;
+            } else {
+                $btotatlexp = $interval->format('%y years');
+                $otalexp = $interval->format('%y') + $emp->fk_emp_previous_exp;
+                if ($btotatlexp < 5) {
+                    $badge = "gray";
+                } elseif ($btotatlexp >= 5 && $btotatlexp < 10) {
+                    $badge = "silver";
+                } else {
+                    $badge = "gold";
+                }
+            }
+
+
+            $employees[$i]->bourntecexp = $btotatlexp;
+            $employees[$i]->exp = $otalexp;
+            $employees[$i]->badge = $badge;
+            $i++;
+        }
+        return response()->json([
+                    'status' => 200,
+                    'emp' => $employees,
+                    'countactive' => $active,
+                    'countnotice' => $noticecount,
+                    'inactivecount' => $inactivecount
         ]);
     }
 
     public function getAllemployeesub($id) {
-     $val=explode('_',$id);
-    // echo '<pre>';print_r($val);
+        $val = explode('_', $id);
+        // echo '<pre>';print_r($val);
         // $employees = DB::select("SELECT sm.*, eb.emp_name as emp_name,eb.emp_code as emp_code FROM `audit_employee_basics` eb left join audit_stream_mapping sm on eb.`id` = sm.fk_employee_id)");
         $employees = DB::table('audit_employee_basics')
-                ->select('audit_employee_basics.id as id','emp_name', 'emp_code', 'fk_stream_id', 'fk_sub_strea_id', 'fk_employee_id')
+                ->select('audit_employee_basics.id as id', 'emp_name', 'emp_code', 'fk_stream_id', 'fk_sub_strea_id', 'fk_employee_id')
                 ->leftJoin('audit_stream_mapping', 'audit_stream_mapping.fk_employee_id', '=', 'audit_employee_basics.id')
                 ->get();
-        $i=0;
-        foreach($employees as $emp)
-        {
-            if($emp->fk_stream_id=="")
-            {
-              $employees[$i]->status=0; 
+        $i = 0;
+        foreach ($employees as $emp) {
+            if ($emp->fk_stream_id == "") {
+                $employees[$i]->status = 0;
+            } elseif ($emp->fk_stream_id == $val[0]) {
+                $employees[$i]->status = 1;
+            } else {
+                $employees[$i]->status = 2;
             }
-            elseif ($emp->fk_stream_id==$val[0]) {
-                $employees[$i]->status=1;  
-            }
-            else {
-               $employees[$i]->status=2;    
-            }
-            $i++; 
+            $i++;
         }
-           
-        
-        
+
+
+
         return response()->json([
                     'status' => 200,
                     'emp' => $employees,

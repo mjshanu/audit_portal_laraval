@@ -86,7 +86,7 @@ class EmployeeController extends Controller {
 
     public function store(Request $request) {
    // return $request->file('resume');
-  // return $request->all();
+ //  return $request->all();
     if($request->hasFile('resume')){
     $file=$request->file('resume');
     $extension=$file->getClientOriginalExtension();

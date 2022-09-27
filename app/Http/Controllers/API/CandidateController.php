@@ -9,7 +9,7 @@ use File;
 class CandidateController extends Controller {
 
     public function add_schedule(Request $request) {
-         return $request->all();
+         //return $request->all();
         DB::table('schedule_details')->insert(
                 array(
                     'b_id' => $request->s_id,

@@ -20,6 +20,7 @@ use App\Http\Controllers\API\SubstreamController;
 use App\Http\Controllers\API\StreammappingController;
 use App\Http\Controllers\API\NoticeController;
 use App\Http\Controllers\API\RevokeController;
+use App\Http\Controllers\API\AssetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::get('/getcandidates',[EmployeeController::class,'index']);
@@ -68,6 +69,7 @@ Route::post('/add_jobs',[JobController::class,'store']);
 Route::get('/getJobs',[JobController::class,'index']);
 Route::get('/editfecthjobdata/{id}',[JobController::class,'edit']);
 Route::put('/update_job',[JobController::class,'update']);
+Route::get('/updatejobstatus/{id}',[JobController::class,'Xhrjobstatus']);
 Route::post('/user-login',[Audit_EmployeeController::class,'userLogin']);
 Route::post('/add_holidays',[HolidayController::class,'store']);
 Route::get('/getHolidays',[HolidayController::class,'index']);
@@ -115,6 +117,7 @@ Route::post('/add_map_stream',[StreammappingController::class,'add_map_stream'])
 Route::post('/add_notice',[NoticeController::class,'store']);
 Route::post('/lastworking_day',[NoticeController::class,'lastworking_day']);
 Route::post('/revokereason',[RevokeController::class,'store']);
+Route::post('/add_asset',[AssetController::class,'store']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
